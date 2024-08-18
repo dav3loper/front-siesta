@@ -1,0 +1,26 @@
+:root {
+  --header-height: 6.25rem;
+}
+
+.header {
+  height: var(--header-height);
+  background-color: #000000;
+
+  &__container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .app__brand {
+    color: #3cff64;
+    font-style: italic;
+  }
+
+  &__brand {
+    max-width: 15rem;
+    max-height: 6.25rem;
+  }
+}
