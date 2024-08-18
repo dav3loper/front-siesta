@@ -5,10 +5,12 @@ import {Layout} from "./sections/Layout/Layout";
 import {DashboardFactory} from "./sections/Dashboard/DashboardFactory";
 import {FilmFestivalVoteListFactory} from "./sections/List/FilmFestivalVoteListFactory";
 import {PrivateRoutes} from "./PrivateRoutes";
-import {Login} from "./sections/Login/Login";
 import {LoginFactory} from "./sections/Login/LoginFactory";
+import useToken from "./sections/Login/UseToken";
 
-const router = createBrowserRouter([
+export function Router() {
+    const {setToken} = useToken();
+    const router = createBrowserRouter([
         {
             element: <PrivateRoutes/>,
             children: [
@@ -26,11 +28,9 @@ const router = createBrowserRouter([
         },
         {
             path: "/login",
-            element: LoginFactory(),
+            element: LoginFactory(setToken),
         }
     ])
-;
-
-export function Router() {
+    ;
     return <RouterProvider router={router}/>;
 }

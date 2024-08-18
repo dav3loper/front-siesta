@@ -4,7 +4,10 @@ import {User} from "../../domain/User/User";
 export default function useToken() {
     const getToken = () => {
         const tokenString = sessionStorage.getItem('token');
-        const userToken = JSON.parse(tokenString ?? '' );
+        if(tokenString == null || tokenString === 'undefined') {
+            return '';
+        }
+        const userToken = JSON.parse(tokenString);
         return userToken?.token
     };
 

@@ -9,7 +9,7 @@ export class FakeUserRepository implements UserRepository {
                 resolve({
                     token: "123456",
                 });
-            }, 2000);
+            }, 500);
         });
     }
 

@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import {UserRepository} from "../../domain/User/UserRepository";
 
-export function Login(userRepository: any, setToken: any) {
+export function Login({userRepository, setToken}: {userRepository: UserRepository, setToken:any}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const token = userRepository.login({
+        const token = await userRepository.login({
             email,
             password
         });
