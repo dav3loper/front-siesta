@@ -21,11 +21,22 @@
     max-width: 480px;
     width: 50%;
     flex-grow: 3;
+    @media (max-width: 1024px) {
+      margin: auto;
+      display: block;
+
+    }
 
   }
 
   &__trailer {
     width: 50%;
+    height: 640px;
+    @media (max-width: 1024px) {
+      width: 100%;
+      margin: 50px
+
+    }
 
   }
 
