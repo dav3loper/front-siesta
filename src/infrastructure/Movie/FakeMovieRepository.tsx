@@ -16,7 +16,7 @@ export class FakeMovieRepository implements MovieRepository {
                     link: "https://sitgesfilmfestival.com/es/film/2023/100-anos-walt-disney-animation-studios-homenaje-cortos",
                     alias: "Test",
                 });
-            }, 2000);
+            }, 500);
         });
     }
 
