@@ -10,15 +10,9 @@ export class FakeFilmFestivalRepository implements FilmFestivalRepository {
                     edition: 55,
                     startsAt: new Date("2024-10-03"),
                     endsAt: new Date("2024-10-13"),
-                    id: "fake-id"
-                },{
-                    name: "2023 Sitges Film Festival",
-                    edition: 54,
-                    startsAt: new Date("2023-10-06"),
-                    endsAt: new Date("2023-10-16"),
-                    id: "fake-id-2"
+                    id: "7"
                 }]);
-            }, 1000);
+            }, 300);
         });
     }
     findById(id: number): Promise<FilmFestival> {

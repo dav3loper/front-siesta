@@ -10,13 +10,8 @@ body{
     display: flex;
     gap: 2rem;
     align-items: center;
-    max-width: 1200px;
+    justify-content: center;
     margin: 0 0;
-  }
-
-  .app__brand {
-    color: #3cff64;
-    font-style: italic;
   }
 
   &__brand {
