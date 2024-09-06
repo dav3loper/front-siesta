@@ -18,12 +18,14 @@ export function MovieDetail({repository}: { repository: MovieRepository }) {
     }
 
     return <section className={styles.movieDetail}>
-        <div className={styles.movieDetail__title}>{movieData.title}</div>
-        <div className={styles.movieDetail__duration}>{movieData.duration}</div>
-        <iframe title={movieData.title} className={styles.movieDetail__trailer}
-                src={`https://www.youtube.com/embed/${movieData.trailer}?rel=0&amp;showinfo=0`} frameBorder="0"
-                allow="autoplay; encrypted-media" allowFullScreen></iframe>
-            <img id="poster" className={styles.movieDetail__poster} src={movieData.poster} alt={movieData.title} />
+        <a className={styles.movieDetail__title} href={movieData.link} target="_blank" rel="noreferrer">
+            <h2>{movieData.title} ({movieData.duration} mins)</h2>
+        </a>
+            <img id="poster" className={styles.movieDetail__poster} src={movieData.poster} alt={movieData.title}/>
+            <iframe title={movieData.title} className={styles.movieDetail__trailer}
+                    src={`https://www.youtube.com/embed/${movieData.trailer}?rel=0&amp;showinfo=0`} frameBorder="0"
+                    allow="autoplay; encrypted-media" allowFullScreen></iframe>
+        <div className={styles.break}></div>
         {/*</div>*/}
         <div className={styles.movieDetail__summary}>{movieData.summary}</div>
         <Vote className={styles.movieDetail__vote}/>
