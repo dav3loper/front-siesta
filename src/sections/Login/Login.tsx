@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {UserRepository} from "../../domain/User/UserRepository";
+import {LoginRepository} from "../../domain/Login/LoginRepository";
 import styles from "./Login.module.scss";
 import brand from "../Layout/brand.png";
 
-export function Login({userRepository, setToken}: { userRepository: UserRepository, setToken: any }) {
+export function Login({userRepository, setToken}: { userRepository: LoginRepository, setToken: any }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

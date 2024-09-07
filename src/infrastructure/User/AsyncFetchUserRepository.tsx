@@ -1,5 +1,4 @@
-import {LoginData} from "../../domain/User/LoginData";
-import {User} from "../../domain/User/User";
+import { Group } from "../../domain/User/Group";
 import {UserRepository} from "../../domain/User/UserRepository";
 
 export class AsyncFetchUserRepository implements UserRepository {
@@ -9,14 +8,13 @@ export class AsyncFetchUserRepository implements UserRepository {
         this.host = host;
     }
 
-    login(loginData: LoginData): Promise<User> {
-        return fetch(this.host+'/login', {
+    usersFromGroup(groupId: number, token: string): Promise<Group> {
+        return fetch(this.host+`/group/${groupId}`, {
             mode: 'cors',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginData)
+            method: 'GET',
+            headers : {
+                'Authorization': `Bearer ${token}`
+            }
         })
             .then(data => data.json())
             .catch(error => console.error(error));

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {User} from "../../domain/User/User";
+import {User} from "../../domain/Login/User";
 
 export default function useToken() {
     const getToken = () => {

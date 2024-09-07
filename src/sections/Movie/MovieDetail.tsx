@@ -4,16 +4,29 @@ import {MovieRepository} from "../../domain/Movie/MovieRepository";
 import {useParams} from "react-router-dom";
 import styles from "./MovieDetail.module.scss";
 import {Vote} from "./Vote";
+import {UserRepository} from "../../domain/User/UserRepository";
+import {Group} from "../../domain/User/Group";
+import useToken from "../Login/UseToken";
+import {decodeToken} from "react-jwt";
+import {TokenData} from "../Login/TokenData";
 
-export function MovieDetail({repository}: { repository: MovieRepository }) {
+export function MovieDetail({repository, userRepository}: { repository: MovieRepository , userRepository:UserRepository}) {
     const id = useParams() as { id: string };
 
+    //TODO: Move all token management to class
+    const {token} = useToken();
+    const tokenData = decodeToken(token.token) as TokenData;
     const [movieData, setMovieData] = useState<Movie>();
+    const [groupData, setGroupData] = useState<Group>();
 
     useEffect(() => {
         repository.findById(Number(id)).then((movieData) => setMovieData(movieData))
     }, []);
-    if (movieData === undefined) {
+    useEffect(() => {
+        userRepository.usersFromGroup(Number(tokenData.group_id), token.token).then((groupData) => setGroupData(groupData))
+    }, []);
+
+    if (movieData === undefined || groupData === undefined) {
         return <></>;
     }
 
@@ -28,7 +41,13 @@ export function MovieDetail({repository}: { repository: MovieRepository }) {
         <div className={styles.break}></div>
         {/*</div>*/}
         <div className={styles.movieDetail__summary}>{movieData.summary}</div>
-        <Vote className={styles.movieDetail__vote}/>
+        <span>Votos del grupo {groupData?.name}</span>
+        {
+            groupData.user_list.map(user => (
+                <Vote key={user.id} className={styles.movieDetail__vote} userName={user.name} userId={user.id}/>
+            ))
+        }
+
     </section>
         ;
 }

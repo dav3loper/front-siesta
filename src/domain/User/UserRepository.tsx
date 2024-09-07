@@ -1,6 +1,5 @@
-import {LoginData} from "./LoginData";
-import {User} from "./User";
+import {Group} from "./Group";
 
 export interface UserRepository {
-    login(loginData: LoginData): Promise<User>
+    usersFromGroup(groupId: number, token: string): Promise<Group>
 }
