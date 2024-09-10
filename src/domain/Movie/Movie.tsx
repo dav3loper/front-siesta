@@ -8,4 +8,5 @@ export interface Movie {
     comments: string;
     link: string;
     alias: string;
+    film_festival_id: string;
 }

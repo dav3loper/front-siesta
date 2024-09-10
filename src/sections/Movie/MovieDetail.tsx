@@ -48,6 +48,10 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const result = await voteRepository.vote(id.id, voteList, token.token);
+        if(result.ok){
+            const next = await voteRepository.findNextByUserIdAndFilmFestival(movieData.film_festival_id, token.token);
+            window.location.href = `/movie/${next.id}`;
+        }
 
     }
 
@@ -68,6 +72,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
         <div className={styles.break}></div>
         {/*</div>*/}
         <div className={styles.movieDetail__summary}>{movieData.summary}</div>
+        <div className={styles.break}></div>
         <span>Votos del grupo {groupData?.name}</span>
         <form onSubmit={handleSubmit}>
             {
