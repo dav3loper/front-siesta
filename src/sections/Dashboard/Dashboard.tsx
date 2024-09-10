@@ -1,42 +1,46 @@
 import {FilmFestivalRepository} from "../../domain/Dashboard/FilmFestivalRepository";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilmFestival} from "../../domain/Dashboard/FilmFestival";
 import styles from "./Dashboard.module.scss";
 //TODO: try to do dynamically
 import lastEditionLogo from "../../assets/imgs/poster/55_Sitges.png"
 import {VoteRepository} from "../../domain/Dashboard/VoteRepository";
-import {Vote} from "../../domain/Dashboard/Vote";
-
-//TODO: extract from session
-const userId = 11;
+import useToken from "../Login/UseToken";
+import {Movie} from "../../domain/Dashboard/Movie";
 
 export function Dashboard({filmFestivalRepository, voteRepository}: {
     filmFestivalRepository: FilmFestivalRepository,
     voteRepository: VoteRepository
 }) {
     const [filmFestivalData, setFilmFestivalData] = useState<FilmFestival[]>([]);
+    const {token} = useToken();
+    const [error, setError] = useState('');
+    //TODO: remove this
+    const filmFestivalId = '99';
 
     useEffect(() => {
         filmFestivalRepository.findAll().then((filmFestivalData) => setFilmFestivalData(filmFestivalData))
     }, []);
 
-    const [voteData, setVoteData] = useState<Vote>();
+    const [nextMovie, setNextMovie] = useState<Movie>();
 
     useEffect(() => {
-        voteRepository.findLastByUserId(userId).then((voteData) => setVoteData(voteData))
+        voteRepository.findNextByUserIdAndFilmFestival(filmFestivalId, token.token)
+            .then((movie) => setNextMovie(movie))
+            .catch((err) => setError(err.message))
     }, []);
 
-    const nextMovie = voteData !== undefined ? voteData?.movieId + 1 : 1;
 
     return (
         <section className={styles.container}>
             {filmFestivalData.map((filmFestival) => (
                 <article className={styles.film_festival}>
                     <img alt={filmFestival.name} src={lastEditionLogo} className={styles.film_festival__logo}/>
-                    <a className={styles.btn} href={`/movie/${nextMovie}`}> Votar </a>
+                    <a className={styles.btn} href={`/movie/${nextMovie?.id}`}> Votar </a>
                     <a className={styles.btn} href={`/film-festival/${filmFestival.id}/list`}>Ver listado</a>
                 </article>
             ))}
+            {error ? <p>{error}</p> : null}
         </section>
     );
 }

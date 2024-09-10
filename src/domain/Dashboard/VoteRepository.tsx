@@ -1,5 +1,5 @@
-import {Vote} from "./Vote";
+import {Movie} from "./Movie";
 
 export interface VoteRepository {
-    findLastByUserId(userId: number): Promise<Vote>
+    findNextByUserIdAndFilmFestival(filmFestivalId: string, token: string): Promise<Movie>;
 }
