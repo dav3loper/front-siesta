@@ -6,15 +6,22 @@ import brand from "../Layout/brand.png";
 export function Login({userRepository, setToken}: { userRepository: LoginRepository, setToken: any }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError]=useState('');
 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const token = await userRepository.login({
-            email,
-            password
-        });
-        setToken(token);
+        try {
+            const token = await userRepository.login({
+                email,
+                password
+            });
+            setToken(token);
+        }catch (error){
+            if (error instanceof Error) {
+                setError(error.message);
+            }
+        }
     }
 
     return <>
@@ -46,6 +53,7 @@ export function Login({userRepository, setToken}: { userRepository: LoginReposit
                     <input type="submit" value="Login" className={styles.btn}/>
                 </div>
             </form>
+            {error ? <div>{error}</div>: null }
         </div>
         </>
         ;

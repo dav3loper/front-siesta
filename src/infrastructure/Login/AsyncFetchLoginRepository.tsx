@@ -18,8 +18,12 @@ export class AsyncFetchLoginRepository implements LoginRepository {
             },
             body: JSON.stringify(loginData)
         })
-            .then(data => data.json())
-            .catch(error => console.error(error));
+            .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Usuario o contraseña no valido');
+        });
     }
 
 }
