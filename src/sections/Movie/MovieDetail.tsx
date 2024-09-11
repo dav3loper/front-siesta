@@ -29,17 +29,34 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     useEffect(() => {
         repository.findById(Number(id)).then((movieData) => setMovieData(movieData))
     }, []);
+
     useEffect(() => {
-        userRepository.usersFromGroup(Number(tokenData.group_id), token.token).then(function (groupData){
-            setGroupData(groupData);
+        userRepository.usersFromGroup(Number(tokenData.group_id), token.token).then(function (groupData) {
             const userList = groupData.user_list;
             let voteListData = [];
-            for( const user of userList){
+            for (const user of userList) {
+                //TODO : cambiar por map
                 voteListData.push({"user_id": String(user.id), "score": "-1", "user_name": user.name});
             }
             setVoteList(voteListData);
+            setGroupData(groupData);
         })
     }, []);
+
+    useEffect(() => {
+        if (!groupData) {
+            return;
+        }
+        voteRepository.getVotesForMovie(id.id, token.token).then((voteResponse) => {
+            let newVoteList = [];
+            const votesDone = voteResponse.votes;
+            for(const initialVote of voteList){
+                const voteOfUser = votesDone.filter((vote:VoteData) => vote.user_id === initialVote.user_id);
+                newVoteList.push( voteOfUser.length > 0 ? {...voteOfUser[0], "user_name": initialVote.user_name} : initialVote );
+            }
+            setVoteList(newVoteList);
+        })
+    }, [groupData]);
 
     if (movieData === undefined || groupData === undefined) {
         return <></>;
@@ -48,17 +65,17 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const result = await voteRepository.vote(id.id, voteList, token.token);
-        if(result.ok){
+        if (result.ok) {
             const next = await voteRepository.findNextByUserIdAndFilmFestival(movieData.film_festival_id, token.token);
             window.location.href = `/movie/${next.id}`;
         }
 
     }
 
-    const onOptionChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const onOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVoteList(voteList.map((vote) => vote.user_id === e.target.dataset.id
-        ? {...vote, "score": e.target.value}
-        : {...vote}))
+            ? {...vote, "score": e.target.value}
+            : {...vote}))
     };
 
     return <section className={styles.movieDetail}>
