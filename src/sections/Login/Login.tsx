@@ -24,7 +24,7 @@ export function Login({userRepository, setToken}: { userRepository: LoginReposit
         }
     }
 
-    return <>
+    return <div className={styles.component}>
         <header className={styles.header}>
             <section className={styles.header__container}>
                 <img src={brand} alt="brand" className={styles.header__brand}/>
@@ -55,6 +55,6 @@ export function Login({userRepository, setToken}: { userRepository: LoginReposit
             </form>
             {error ? <div>{error}</div>: null }
         </div>
-        </>
+        </div>
         ;
         }

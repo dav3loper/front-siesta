@@ -90,8 +90,8 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
         {/*</div>*/}
         <div className={styles.movieDetail__summary}>{movieData.summary}</div>
         <div className={styles.break}></div>
-        <span>Votos del grupo {groupData?.name}</span>
-        <form onSubmit={handleSubmit}>
+        <span className={styles.movieDetail__group}>Votos del grupo {groupData?.name}</span>
+        <form className={styles.movieDetail__form} onSubmit={handleSubmit}>
             {
                 voteList.map(vote => (
                     <div className={styles.movieDetail__vote}>
