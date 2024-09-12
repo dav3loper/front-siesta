@@ -2,6 +2,9 @@ import { Movie } from "../../domain/Movie/Movie";
 import {MovieRepository} from "../../domain/Movie/MovieRepository";
 
 export class FakeMovieRepository implements MovieRepository {
+    findAll(filmFestivalId: string, token: string): Promise<Movie[]> {
+        throw new Error("Method not implemented.");
+    }
     findById(id: number): Promise<Movie> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {

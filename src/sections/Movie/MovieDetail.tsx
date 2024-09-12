@@ -27,7 +27,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     const [voteList, setVoteList] = useState<VoteData[]>([]);
 
     useEffect(() => {
-        repository.findById(Number(id)).then((movieData) => setMovieData(movieData))
+        repository.findById(Number(id), '').then((movieData) => setMovieData(movieData))
     }, []);
 
     useEffect(() => {

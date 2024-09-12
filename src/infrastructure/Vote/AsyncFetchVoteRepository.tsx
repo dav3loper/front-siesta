@@ -2,7 +2,7 @@ import {VoteRepository} from "../../domain/Vote/VoteRepository";
 import {VoteData, VoteResponse} from "../../domain/Vote/VoteData";
 import { Movie } from "../../domain/Dashboard/Movie";
 
-export class AsynFetchVoteRepository implements VoteRepository {
+export class AsyncFetchVoteRepository implements VoteRepository {
     private host: string;
 
     constructor(host: string) {
