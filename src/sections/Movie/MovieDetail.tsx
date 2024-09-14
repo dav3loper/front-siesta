@@ -27,7 +27,9 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     const [voteList, setVoteList] = useState<VoteData[]>([]);
 
     useEffect(() => {
-        repository.findById(Number(id), '').then((movieData) => setMovieData(movieData))
+        repository.findById(Number(id.id), token.token).then((movieData) => {
+            setMovieData(movieData)
+        })
     }, []);
 
     useEffect(() => {
@@ -79,9 +81,12 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     };
 
     return <section className={styles.movieDetail}>
-        <a className={styles.movieDetail__title} href={movieData.link} target="_blank" rel="noreferrer">
-            <h2>{movieData.title} ({movieData.duration} mins)</h2>
-        </a>
+        <div className={styles.movieDetail__section}>
+            <a className={styles.movieDetail__title} href={movieData.link} target="_blank" rel="noreferrer">
+                <h2>{movieData.title} ({movieData.duration} mins)</h2>
+            </a>
+            <div>Sección: {movieData.section}</div>
+        </div>
         <img id="poster" className={styles.movieDetail__poster} src={movieData.poster} alt={movieData.title}/>
         <iframe title={movieData.title} className={styles.movieDetail__trailer}
                 src={`https://www.youtube.com/embed/${movieData.trailer}?rel=0&amp;showinfo=0`} frameBorder="0"
@@ -141,7 +146,15 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
             }
             <button type="submit">Enviar votos</button>
         </form>
-
+        <div className={styles.break}></div>
+        {
+            movieData.sessions && movieData.sessions.map(session => (
+                <div>
+                    <span
+                        className={styles.movieDetail__group}>La echan en <strong> {session.location} </strong> a las {session.init_date}</span>
+                </div>
+            ))
+        }
     </section>
         ;
 }

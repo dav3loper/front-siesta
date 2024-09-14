@@ -13,11 +13,14 @@ body{
   margin: 25px;
 
   &__title {
-    width: 100%;
     text-align: left;
     text-decoration: none;
     color: #0a0a00;
-    border: 5px  inset #d01110;
+  }
+
+  &__section {
+    width: 100%;
+    text-align: left;
   }
 
   &__poster {
@@ -52,6 +55,7 @@ body{
     display: flex;
     flex: 1;
     gap: 2rem;
+    margin-bottom: 0;
   }
 
   &__group {

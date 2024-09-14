@@ -9,4 +9,12 @@ export interface Movie {
     link: string;
     alias: string;
     film_festival_id: string;
+    section: string;
+    sessions: Session[]
+}
+
+export interface Session {
+    location: string;
+    init_date: string;
+    end_date: string;
 }
