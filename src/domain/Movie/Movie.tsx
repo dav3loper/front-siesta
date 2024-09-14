@@ -1,3 +1,5 @@
+import {VoteData} from "../Vote/VoteData";
+
 export interface Movie {
     id: number;
     title: string;
@@ -10,7 +12,8 @@ export interface Movie {
     alias: string;
     film_festival_id: string;
     section: string;
-    sessions: Session[]
+    sessions: Session[];
+    votes: VoteData[];
 }
 
 export interface Session {
