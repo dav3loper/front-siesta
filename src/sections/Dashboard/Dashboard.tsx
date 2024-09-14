@@ -34,7 +34,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     return (
         <section className={styles.container}>
             {filmFestivalData.map((filmFestival) => (
-                <article className={styles.film_festival}>
+                <article key={filmFestival.id} className={styles.film_festival}>
                     <img alt={filmFestival.name} src={lastEditionLogo} className={styles.film_festival__logo}/>
                     <a className={styles.btn} href={`/movie/${nextMovie?.id}`}> Votar </a>
                     <a className={styles.btn} href={`/film-festival/${filmFestival.id}/list`}>Ver listado</a>

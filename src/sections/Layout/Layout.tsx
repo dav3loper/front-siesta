@@ -8,7 +8,7 @@ export function Layout() {
         <>
             <header className={styles.header}>
                 <section className={styles.header__container}>
-                    <img src={brand} alt="brand" className={styles.header__brand}/>
+                    <a href={"/"}><img src={brand} alt="brand" className={styles.header__brand}/></a>
                 </section>
             </header>
             <Outlet />

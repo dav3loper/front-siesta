@@ -27,7 +27,6 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
         if(!movieList || !Array.isArray(movieList)) {
             return;
         }
-        console.log(movieList);
         const movieWithVotes: MovieWithScore[] = [];
         for(const movie of movieList){
             voteRepository.getVotesForMovie(String(movie.id), token.token).then((votes) => {
@@ -38,11 +37,16 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
             });
         }
         setMovieListWithVotes(movieWithVotes);
-
-
     }, [movieList]);
 
     return <>
-
+        <h2>Listado de películas: </h2>
+        {movieList.map((movieWithVote) => (
+            <article key={movieWithVote.id}>
+                <a href={movieWithVote.link}><span>{movieWithVote.title}</span></a>
+                <span></span>
+            </article>
+        ))
+        }
     </>;
 }
