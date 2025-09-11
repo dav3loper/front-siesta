@@ -16,7 +16,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     const {token} = useToken();
     const [error, setError] = useState('');
     //TODO: remove this
-    const filmFestivalId = '7';
+    const filmFestivalId = '8';
 
     useEffect(() => {
         filmFestivalRepository.findAll().then((filmFestivalData) => setFilmFestivalData(filmFestivalData))

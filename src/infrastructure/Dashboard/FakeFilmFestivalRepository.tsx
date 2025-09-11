@@ -6,11 +6,11 @@ export class FakeFilmFestivalRepository implements FilmFestivalRepository {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve([{
-                    name: "2024 Sitges Film Festival",
-                    edition: 55,
-                    startsAt: new Date("2024-10-03"),
-                    endsAt: new Date("2024-10-13"),
-                    id: "7"
+                    name: "2025 Sitges Film Festival",
+                    edition: 58,
+                    startsAt: new Date("2025-10-09"),
+                    endsAt: new Date("2025-10-19"),
+                    id: "8"
                 }]);
             }, 300);
         });
