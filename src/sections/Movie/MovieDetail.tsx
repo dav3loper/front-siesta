@@ -85,13 +85,13 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
             <a className={styles.movieDetail__title} href={movieData.link} target="_blank" rel="noreferrer">
                 <h2>{movieData.title} ({movieData.duration} mins)</h2>
             </a>
-            <div>Sección: {movieData.section}</div>
+            <div><strong>Sección</strong>: {movieData.section}</div>
             <div className={styles.movieDetail__sessions}>
                 {
                     movieData.sessions && movieData.sessions.map(session => (
                         <div>
                     <span
-                        className={styles.movieDetail__group}>La echan en {' '}<strong> {session.location} </strong> a las {session.init_date}</span>
+                        className={styles.movieDetail__group}><strong> {session.location} </strong> : {session.init_date}</span>
                         </div>
                     ))
                 }
