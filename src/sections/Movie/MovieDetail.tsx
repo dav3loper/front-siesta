@@ -86,6 +86,16 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
                 <h2>{movieData.title} ({movieData.duration} mins)</h2>
             </a>
             <div>Sección: {movieData.section}</div>
+            <div className={styles.movieDetail__sessions}>
+                {
+                    movieData.sessions && movieData.sessions.map(session => (
+                        <div>
+                    <span
+                        className={styles.movieDetail__group}>La echan en {' '}<strong> {session.location} </strong> a las {session.init_date}</span>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
         <img id="poster" className={styles.movieDetail__poster} src={movieData.poster} alt={movieData.title}/>
         <iframe title={movieData.title} className={styles.movieDetail__trailer}
@@ -147,14 +157,6 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
             <button type="submit">Enviar votos</button>
         </form>
         <div className={styles.break}></div>
-        {
-            movieData.sessions && movieData.sessions.map(session => (
-                <div>
-                    <span
-                        className={styles.movieDetail__group}>La echan en <strong> {session.location} </strong> a las {session.init_date}</span>
-                </div>
-            ))
-        }
     </section>
         ;
 }
