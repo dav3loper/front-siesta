@@ -80,10 +80,18 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
             : {...vote}))
     };
 
+    const voteData = voteList.filter((vote) => parseInt(vote.score) > 0 );
+    const movieScore = voteData
+        .reduce((a, b) => {
+            const toAdd = parseInt(b.score) > 1 ? b.user_name[0] : b.user_name[0].toLowerCase();
+            return a + toAdd
+        }, '').split('').sort().join('')
+
+
     return <section className={styles.movieDetail}>
         <div className={styles.movieDetail__section}>
             <a className={styles.movieDetail__title} href={movieData.link} target="_blank" rel="noreferrer">
-                <h2>{movieData.title} ({movieData.duration} mins)</h2>
+                <h2>{movieData.title} ({movieData.duration} mins) <span className={styles.movieDetail__rank}>[{movieScore}]</span></h2>
             </a>
             <div><strong>Sección</strong>: {movieData.section}</div>
             <div className={styles.movieDetail__sessions}>
