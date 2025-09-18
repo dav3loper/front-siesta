@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {FilmFestival} from "../../domain/Dashboard/FilmFestival";
 import styles from "./Dashboard.module.scss";
 //TODO: try to do dynamically
-import lastEditionLogo from "../../assets/imgs/poster/55_Sitges.png"
+import lastEditionLogo from "../../assets/imgs/poster/58_Sitges.png"
 import {VoteRepository} from "../../domain/Dashboard/VoteRepository";
 import useToken from "../Login/UseToken";
 import {Movie} from "../../domain/Dashboard/Movie";
