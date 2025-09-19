@@ -35,6 +35,7 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
         {movieList.map((movieWithVote) => (
             <article className={styles.movie__row} key={movieWithVote.id}>
                 <a href={movieWithVote.link}><span>{movieWithVote.title}</span></a>
+                <div>[{movieWithVote.alias}]</div>
                 <div>{movieWithVote.votes.sort(sortVotes).reduce((accumulated, vote: VoteData) => accumulated+vote.user_name, '')}</div>
             </article>
         ))
