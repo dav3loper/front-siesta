@@ -1,33 +1,79 @@
 @import "../../styles/tokens";
 
-.header {
-  height: var(--header-height);
-  background-color: var(--ink);
+.shell {
+  display: flex;
+  min-height: 100vh;
 
-  &__container {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    margin: 0;
-  }
-
-  &__brand {
-    max-height: 4.5rem;
-    width: auto;
-    display: block;
-    margin-top: 0.75rem;
-    // The source PNG sits on a solid black square; screen-blending it
-    // against the header lets that square dissolve into the header's
-    // own tone instead of reading as a pasted-on rectangle.
-    mix-blend-mode: screen;
+  @media (max-width: 720px) {
+    flex-direction: column;
+    min-height: auto;
   }
 }
 
-// Sprocket-hole strip: dark film-stock edge with holes punched through
-// to the page's own background, like a filmstrip laid over the content.
-.perforation {
-  @include perforation(var(--ink));
-  background-color: var(--ink-raised);
+.rail {
+  flex: 0 0 var(--rail-size);
+  width: var(--rail-size);
+  background: var(--void-raised);
+  border-right: 1px solid var(--void-line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+
+  @media (max-width: 720px) {
+    position: static;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    border-right: none;
+    border-bottom: 1px solid var(--void-line);
+    padding: 0.85rem 1.25rem;
+  }
+}
+
+.brand {
+  display: block;
+  width: 2.25rem;
+  mix-blend-mode: screen;
+}
+
+.status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media (max-width: 720px) {
+    writing-mode: horizontal-tb;
+  }
+}
+
+.led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow: 0 0 6px var(--phosphor);
+  flex: 0 0 auto;
+  animation: blink 2.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
 }

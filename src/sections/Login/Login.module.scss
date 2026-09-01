@@ -1,109 +1,107 @@
 @import "../../styles/tokens";
 
-.header {
-  height: var(--header-height);
-  background-color: var(--ink);
-
-  &__container {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    margin: 0;
-  }
-
-  &__brand {
-    max-height: 4.5rem;
-    width: auto;
-    display: block;
-    margin-top: 0.75rem;
-    mix-blend-mode: screen;
-  }
-}
-
-.perforation {
-  @include perforation(var(--ink));
-  background-color: var(--ink-raised);
-}
-
-.component {
-  min-height: calc(100vh - var(--header-height) - 10px);
+.screen {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.25rem;
+  background: var(--void);
 }
 
-.pass {
+.terminal {
   width: 100%;
-  max-width: 22rem;
-  background: var(--paper);
-  color: var(--paper-text);
-  border-radius: var(--radius);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
+  max-width: 26rem;
+  background: var(--void-raised);
+  border: 1px solid var(--void-line);
+  @include cut-corner(24px);
 }
 
-.pass__band {
-  background: var(--curtain);
-  color: var(--paper);
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--void-line);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  text-align: center;
-  padding: 0.5rem;
+  color: var(--text-muted);
 }
 
-.pass__body {
-  padding: 2.25rem 2rem 2rem;
+.barLed {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--alarm);
+  box-shadow: 0 0 6px var(--alarm);
 }
 
-.pass__eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--paper-text-muted);
-  margin: 0 0 0.35rem;
+.body {
+  padding: 2rem 1.75rem 2.25rem;
 }
 
-.pass__title {
+.brand {
+  display: block;
+  width: 6.5rem;
+  margin: 0 auto 1.5rem;
+  mix-blend-mode: screen;
+}
+
+.title {
   font-family: var(--font-display);
+  font-weight: 800;
   text-transform: uppercase;
-  font-size: 2rem;
-  letter-spacing: 0.02em;
-  line-height: 1.05;
-  margin: 0 0 1.75rem;
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 2rem;
 }
 
 .field {
   display: block;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.15rem;
 
   &__label {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--paper-text-muted);
+    color: var(--phosphor);
     margin-bottom: 0.35rem;
+
+    &::before {
+      content: "> ";
+    }
   }
 
   &__input {
     width: 100%;
-    border: 2px solid var(--paper-dim);
-    background: transparent;
-    border-radius: 3px;
+    border: 1px solid var(--void-line);
+    background: var(--void);
     padding: 0.65rem 0.75rem;
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     font-size: 1rem;
-    color: var(--paper-text);
+    color: var(--text);
+    border-radius: 0;
 
     &:focus {
-      border-color: var(--curtain);
+      border-color: var(--phosphor);
       outline: none;
     }
   }
@@ -112,19 +110,20 @@
 .btn {
   width: 100%;
   margin-top: 0.5rem;
-  padding: 0.85rem 1rem;
+  padding: 0.8rem 1rem;
   border: none;
-  border-radius: 3px;
-  background: var(--curtain);
-  color: var(--paper);
-  font-family: var(--font-display);
+  background: var(--phosphor);
+  color: var(--void);
+  font-family: var(--font-mono);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
   cursor: pointer;
+  @include cut-corner(12px);
 
   &:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.1);
   }
 }
 
@@ -132,5 +131,9 @@
   margin-top: 1rem;
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--curtain);
+  color: var(--alarm);
+
+  &::before {
+    content: "[ERROR] ";
+  }
 }

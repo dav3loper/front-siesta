@@ -1,42 +1,46 @@
 :root {
-  // Surfaces
-  --ink: #14110f;
-  --ink-raised: #1f1a15;
-  --paper: #f2e9d8;
-  --paper-dim: #e4d6b8;
+  // Surfaces — cold monitoring-station void, not warm film stock
+  --void: #0a0e0f;
+  --void-raised: #121a1c;
+  --void-line: #223033;
 
-  // Ballot accents — one per vote state, not decoration
-  --marquee: #e8a93a; // quiero verla
-  --curtain: #a63232; // no querer
-  --reel: #2f6e62;    // podría verla
-  --smoke: #8a8175;   // sin votar
+  // Dossier paper — a declassified case-file surface, not a movie ticket
+  --dossier: #e7e2d3;
+  --dossier-text: #14110f;
+  --dossier-text-muted: #5b5646;
 
-  // Text
-  --ink-text: #efe6d4;
-  --ink-text-muted: #b9ac93;
-  --paper-text: #14110f;
-  --paper-text-muted: #6b6455;
+  // Signal accents — one per ballot state, not decoration
+  --phosphor: #7cffb2; // quiero verla — signal locked
+  --alarm: #ff4d4d;    // no querer — rejected
+  --amber: #ffb020;    // podría verla — caution
+  --static: #5b6a70;   // sin votar — no signal
+
+  // Text on void
+  --text: #d8e6df;
+  --text-muted: #7c8b86;
 
   // Type
-  --font-display: 'Anton', 'Arial Narrow Bold', sans-serif;
-  --font-body: 'Source Serif 4', Georgia, serif;
-  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-display: 'Big Shoulders Display', 'Arial Narrow Bold', sans-serif;
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-type: 'Special Elite', 'Courier New', monospace;
 
   // Layout
-  --header-height: 7rem;
-  --radius: 6px;
+  --rail-size: 4.25rem;
+  --cut: 16px; // signature corner-cut size, shared by every panel
 }
 
-@mixin perforation($color: var(--ink)) {
-  height: 10px;
-  background-image: radial-gradient(circle, $color 2.5px, transparent 2.6px);
-  background-size: 18px 100%;
-  background-repeat: repeat-x;
-  background-position: 9px 50%;
+// The one shape signature: every panel loses its bottom-right corner,
+// like a beveled instrument panel — never a plain rounded rectangle.
+@mixin cut-corner($size: var(--cut)) {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - #{$size}), calc(100% - #{$size}) 100%, 0 100%);
 }
 
-@mixin stamp-texture {
-  background-image:
-    repeating-conic-gradient(rgba(0, 0, 0, 0.18) 0deg 4deg, transparent 4deg 12deg);
-  background-blend-mode: multiply;
+@mixin scanlines($opacity: 0.05) {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(124, 255, 178, $opacity) 0px,
+    rgba(124, 255, 178, $opacity) 1px,
+    transparent 1px,
+    transparent 3px
+  );
 }

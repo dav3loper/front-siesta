@@ -93,16 +93,20 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     ];
 
     const titleHeading = <h2>{movieData.title}</h2>;
+    const fileCode = `EXP-${String(movieData.id).padStart(2, '0')}`;
 
     return <section className={styles.page}>
         <div className={styles.header}>
-            {movieData.section && <p className={styles.eyebrow}>{movieData.section}</p>}
+            <p className={styles.eyebrow}>
+                {fileCode}
+                {movieData.section && <span className={styles.eyebrowSection}>{movieData.section}</span>}
+            </p>
             <div className={styles.titleRow}>
                 {movieData.link
                     ? <a className={styles.title} href={movieData.link} target="_blank" rel="noreferrer">{titleHeading}</a>
                     : <span className={styles.title}>{titleHeading}</span>}
                 {movieData.duration > 0 && <span className={styles.duration}>{movieData.duration} min</span>}
-                {movieData.alias && <span className={styles.alias}>“{movieData.alias}”</span>}
+                {movieData.alias && <span className={styles.alias}>{movieData.alias}</span>}
                 {movieScore && <span className={styles.code}>{movieScore}</span>}
             </div>
             {movieData.sessions && movieData.sessions.length > 0 &&
@@ -118,19 +122,23 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
 
         <div className={styles.media}>
             {movieData.poster
-                ? <img className={styles.poster} src={movieData.poster} alt={movieData.title}/>
-                : <div className={styles.posterPlaceholder}>Cartel<br/>próximamente</div>}
+                ? <div className={styles.posterWrap}>
+                    <img className={styles.poster} src={movieData.poster} alt={movieData.title}/>
+                    <div className={styles.scan}/>
+                    <span className={styles.tag}>En investigación</span>
+                </div>
+                : <div className={styles.posterPlaceholder}>Cartel<br/>no interceptado</div>}
             {movieData.trailer
                 ? <iframe title={movieData.title} className={styles.trailer}
                           src={`https://www.youtube.com/embed/${movieData.trailer}?rel=0&amp;showinfo=0`} frameBorder="0"
                           allow="autoplay; encrypted-media" allowFullScreen></iframe>
-                : <div className={styles.trailerPlaceholder}>Tráiler próximamente</div>}
+                : <div className={styles.trailerPlaceholder}>Sin señal de vídeo</div>}
         </div>
 
         {movieData.summary && <p className={styles.summary}>{movieData.summary}</p>}
 
         <form className={styles.ballot} onSubmit={handleSubmit}>
-            <p className={styles.ballotLabel}>Papeleta del grupo <strong>{groupData?.name}</strong></p>
+            <p className={styles.ballotLabel}>Clasificación de amenaza · grupo <strong>{groupData?.name}</strong></p>
             {voteList.map(vote => (
                 <div className={styles.row} key={vote.user_id}>
                     <span className={styles.rowName}>{vote.user_name}</span>

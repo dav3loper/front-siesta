@@ -37,18 +37,20 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     return (
         <section className={styles.page}>
             {filmFestivalData.map((filmFestival) => (
-                <article key={filmFestival.id} className={styles.ticket}>
-                    <img alt={filmFestival.name} src={lastEditionLogo} className={styles.ticket__poster}/>
-                    <div className={styles.ticket__perforation}/>
-                    <div className={styles.ticket__stub}>
-                        <p className={styles.ticket__eyebrow}>Festival</p>
-                        <h2 className={styles.ticket__title}>{filmFestival.name}</h2>
-                        <p className={styles.ticket__meta}>
+                <article key={filmFestival.id} className={styles.file}>
+                    <div className={styles.posterWrap}>
+                        <img alt={filmFestival.name} src={lastEditionLogo} className={styles.poster}/>
+                        <div className={styles.scan}/>
+                    </div>
+                    <div className={styles.stub}>
+                        <p className={styles.eyebrow}>Expediente · Festival</p>
+                        <h2 className={styles.title}>{filmFestival.name}</h2>
+                        <p className={styles.meta}>
                             {filmFestival.edition}ª edición · {formatDate(filmFestival.startsAt)}–{formatDate(filmFestival.endsAt)}
                         </p>
-                        <div className={styles.ticket__actions}>
-                            <a className={`${styles.cta} ${styles["cta--primary"]}`} href={`/movie/${nextMovie?.id}`}>Votar</a>
-                            <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>Ver listado</a>
+                        <div className={styles.actions}>
+                            <a className={`${styles.cta} ${styles["cta--primary"]}`} href={`/movie/${nextMovie?.id}`}>&gt; Votar</a>
+                            <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>&gt; Ver listado</a>
                         </div>
                     </div>
                 </article>

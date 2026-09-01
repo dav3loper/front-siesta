@@ -10,10 +10,22 @@ html {
 
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--ink-text);
-  font-family: var(--font-body);
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-type);
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+// Permanent, faint CRT scanline texture over the whole app.
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  @include scanlines(0.035);
+  mix-blend-mode: overlay;
 }
 
 a {
@@ -21,7 +33,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--marquee);
+  outline: 2px solid var(--phosphor);
   outline-offset: 2px;
 }
 
