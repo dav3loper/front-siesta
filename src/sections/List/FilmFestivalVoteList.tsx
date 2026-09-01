@@ -20,9 +20,10 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
 }) {
     const filmFestivalId = useParams() as { id: string };
     const {token} = useToken();
+    const userToken = token!;
     const [movieList, setMovieList] = useState<Movie[]>([]);
     useEffect(() => {
-        movieRepository.findAll(filmFestivalId.id, token.token)
+        movieRepository.findAll(filmFestivalId.id, userToken.token)
             .then(movieList => {
                 setMovieList(movieList)
             })

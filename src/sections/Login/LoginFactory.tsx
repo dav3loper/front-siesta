@@ -1,8 +1,8 @@
 import React from "react";
 import {Login} from "./Login";
-import {AsyncFetchLoginRepository} from "../../infrastructure/Login/AsyncFetchLoginRepository";
+import {FirebaseLoginRepository} from "../../infrastructure/Login/FirebaseLoginRepository";
 
-const userRepository = new AsyncFetchLoginRepository(process.env.REACT_APP_API_BASE_URL ?? '');
+const userRepository = new FirebaseLoginRepository();
 
 export function LoginFactory(setToken: any): React.ReactElement {
 

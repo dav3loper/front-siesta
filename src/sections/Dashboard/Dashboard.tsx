@@ -14,6 +14,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
 }) {
     const [filmFestivalData, setFilmFestivalData] = useState<FilmFestival[]>([]);
     const {token} = useToken();
+    const userToken = token!;
     const [error, setError] = useState('');
     //TODO: remove this
     const filmFestivalId = '8';
@@ -25,7 +26,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     const [nextMovie, setNextMovie] = useState<Movie>();
 
     useEffect(() => {
-        voteRepository.findNextByUserIdAndFilmFestival(filmFestivalId, token.token)
+        voteRepository.findNextByUserIdAndFilmFestival(filmFestivalId, userToken.token)
             .then((movie) => setNextMovie(movie))
             .catch((err) => setError(err.message))
     }, []);

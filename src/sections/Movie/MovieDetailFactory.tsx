@@ -1,12 +1,12 @@
 import React from "react";
 import {MovieDetail} from "./MovieDetail";
-import {AsyncFetchUserRepository} from "../../infrastructure/User/AsyncFetchUserRepository";
-import {AsyncFetchVoteRepository} from "../../infrastructure/Vote/AsyncFetchVoteRepository";
-import {AsyncFetchMovieRepository} from "../../infrastructure/Movie/AsyncFetchMovieRepository";
+import {FirebaseUserRepository} from "../../infrastructure/User/FirebaseUserRepository";
+import {FirebaseVoteRepository} from "../../infrastructure/Vote/FirebaseVoteRepository";
+import {FirebaseMovieRepository} from "../../infrastructure/Movie/FirebaseMovieRepository";
 
-const repository = new AsyncFetchMovieRepository(process.env.REACT_APP_API_BASE_URL ?? '');
-const userRepository = new AsyncFetchUserRepository(process.env.REACT_APP_API_BASE_URL ?? '');
-const voteRepository = new AsyncFetchVoteRepository(process.env.REACT_APP_API_BASE_URL ?? '');
+const repository = new FirebaseMovieRepository();
+const userRepository = new FirebaseUserRepository();
+const voteRepository = new FirebaseVoteRepository();
 
 export class MovieDetailFactory {
     static create(): React.ReactElement {

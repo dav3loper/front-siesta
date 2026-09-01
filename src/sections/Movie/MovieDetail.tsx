@@ -6,8 +6,6 @@ import styles from "./MovieDetail.module.scss";
 import {UserRepository} from "../../domain/User/UserRepository";
 import {Group} from "../../domain/User/Group";
 import useToken from "../Login/UseToken";
-import {decodeToken} from "react-jwt";
-import {TokenData} from "../Login/TokenData";
 import {VoteRepository} from "../../domain/Vote/VoteRepository";
 import {VoteData} from "../../domain/Vote/VoteData";
 
@@ -21,19 +19,19 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
 
     //TODO: Move all token management to class
     const {token} = useToken();
-    const tokenData = decodeToken(token.token) as TokenData;
+    const userToken = token!;
     const [movieData, setMovieData] = useState<Movie>();
     const [groupData, setGroupData] = useState<Group>();
     const [voteList, setVoteList] = useState<VoteData[]>([]);
 
     useEffect(() => {
-        repository.findById(Number(id.id), token.token).then((movieData) => {
+        repository.findById(Number(id.id), userToken.token).then((movieData) => {
             setMovieData(movieData)
         })
     }, []);
 
     useEffect(() => {
-        userRepository.usersFromGroup(Number(tokenData.group_id), token.token).then(function (groupData) {
+        userRepository.usersFromGroup(Number(userToken.groupId), userToken.token).then(function (groupData) {
             const userList = groupData.user_list;
             let voteListData = [];
             for (const user of userList) {
@@ -49,7 +47,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
         if (!groupData) {
             return;
         }
-        voteRepository.getVotesForMovie(id.id, token.token).then((voteResponse) => {
+        voteRepository.getVotesForMovie(id.id, userToken.token).then((voteResponse) => {
             let newVoteList = [];
             const votesDone = voteResponse.votes;
             for(const initialVote of voteList){
@@ -66,9 +64,9 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const result = await voteRepository.vote(id.id, voteList, token.token);
+        const result = await voteRepository.vote(id.id, voteList, userToken.token);
         if (result.ok) {
-            const next = await voteRepository.findNextByUserIdAndFilmFestival(movieData.film_festival_id, token.token);
+            const next = await voteRepository.findNextByUserIdAndFilmFestival(movieData.film_festival_id, userToken.token);
             window.location.href = `/movie/${next.id}`;
         }
 
