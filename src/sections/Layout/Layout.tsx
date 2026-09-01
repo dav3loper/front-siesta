@@ -8,9 +8,10 @@ export function Layout() {
         <>
             <header className={styles.header}>
                 <section className={styles.header__container}>
-                    <a href={"/"}><img src={brand} alt="brand" className={styles.header__brand}/></a>
+                    <a href={"/"}><img src={brand} alt="Siesta" className={styles.header__brand}/></a>
                 </section>
             </header>
+            <div className={styles.perforation}/>
             <Outlet />
         </>
     );

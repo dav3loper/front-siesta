@@ -17,7 +17,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     const userToken = token!;
     const [error, setError] = useState('');
     //TODO: remove this
-    const filmFestivalId = '8';
+    const filmFestivalId = '9';
 
     useEffect(() => {
         filmFestivalRepository.findAll().then((filmFestivalData) => setFilmFestivalData(filmFestivalData))
@@ -32,16 +32,28 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     }, []);
 
 
+    const formatDate = (date: Date) => date.toLocaleDateString('es-ES', {day: 'numeric', month: 'short'});
+
     return (
-        <section className={styles.container}>
+        <section className={styles.page}>
             {filmFestivalData.map((filmFestival) => (
-                <article key={filmFestival.id} className={styles.film_festival}>
-                    <img alt={filmFestival.name} src={lastEditionLogo} className={styles.film_festival__logo}/>
-                    <a className={styles.btn} href={`/movie/${nextMovie?.id}`}> Votar </a>
-                    <a className={styles.btn} href={`/film-festival/${filmFestival.id}/list`}>Ver listado</a>
+                <article key={filmFestival.id} className={styles.ticket}>
+                    <img alt={filmFestival.name} src={lastEditionLogo} className={styles.ticket__poster}/>
+                    <div className={styles.ticket__perforation}/>
+                    <div className={styles.ticket__stub}>
+                        <p className={styles.ticket__eyebrow}>Festival</p>
+                        <h2 className={styles.ticket__title}>{filmFestival.name}</h2>
+                        <p className={styles.ticket__meta}>
+                            {filmFestival.edition}ª edición · {formatDate(filmFestival.startsAt)}–{formatDate(filmFestival.endsAt)}
+                        </p>
+                        <div className={styles.ticket__actions}>
+                            <a className={`${styles.cta} ${styles["cta--primary"]}`} href={`/movie/${nextMovie?.id}`}>Votar</a>
+                            <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>Ver listado</a>
+                        </div>
+                    </div>
                 </article>
             ))}
-            {error ? <p>{error}</p> : null}
+            {error ? <p className={styles.error}>{error}</p> : null}
         </section>
     );
 }

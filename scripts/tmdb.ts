@@ -11,25 +11,25 @@ interface TmdbMovieDetails {
     poster_path: string | null;
 }
 
-function apiKey(): string {
-    const key = process.env.TMDB_API_KEY;
-    if (!key) {
+function authHeader(): { Authorization: string } {
+    const token = process.env.TMDB_API_KEY;
+    if (!token) {
         throw new Error('TMDB_API_KEY es obligatorio en .env');
     }
-    return key;
+    return {Authorization: `Bearer ${token}`};
 }
 
 export async function searchMovie(title: string): Promise<TmdbSearchResult | null> {
-    const url = `${TMDB_BASE_URL}/search/movie?api_key=${apiKey()}&language=es-ES&query=${encodeURIComponent(title)}`;
-    const response = await fetch(url);
+    const url = `${TMDB_BASE_URL}/search/movie?language=es-ES&query=${encodeURIComponent(title)}`;
+    const response = await fetch(url, {headers: authHeader()});
     const data = await response.json();
     const result = data.results?.[0];
     return result ? {id: result.id, title: result.title} : null;
 }
 
 export async function getMovieDetails(tmdbId: number): Promise<TmdbMovieDetails> {
-    const url = `${TMDB_BASE_URL}/movie/${tmdbId}?api_key=${apiKey()}&language=es-ES`;
-    const response = await fetch(url);
+    const url = `${TMDB_BASE_URL}/movie/${tmdbId}?language=es-ES`;
+    const response = await fetch(url, {headers: authHeader()});
     const data = await response.json();
     return {
         overview: data.overview ?? '',

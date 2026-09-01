@@ -1,0 +1,8 @@
+# Un título por línea. Las líneas vacías o que empiecen por # se ignoran.
+Las hijas
+11
+Upiro
+La muerte de Drácula
+La mala madre
+Apocalipsis Z: Nuevo mundo
+The End of It

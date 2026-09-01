@@ -1,21 +1,33 @@
-body{
-  margin: 0 0;
-}
+@import "../../styles/tokens";
 
 .header {
   height: var(--header-height);
-  background-color: #000000;
+  background-color: var(--ink);
 
   &__container {
     display: flex;
     gap: 2rem;
     align-items: center;
     justify-content: center;
-    margin: 0 0;
+    height: 100%;
+    margin: 0;
   }
 
   &__brand {
-    max-width: 15rem;
-    max-height: 6.25rem;
+    max-height: 4.5rem;
+    width: auto;
+    display: block;
+    margin-top: 0.75rem;
+    // The source PNG sits on a solid black square; screen-blending it
+    // against the header lets that square dissolve into the header's
+    // own tone instead of reading as a pasted-on rectangle.
+    mix-blend-mode: screen;
   }
+}
+
+// Sprocket-hole strip: dark film-stock edge with holes punched through
+// to the page's own background, like a filmstrip laid over the content.
+.perforation {
+  @include perforation(var(--ink));
+  background-color: var(--ink-raised);
 }

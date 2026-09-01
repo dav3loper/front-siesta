@@ -24,37 +24,43 @@ export function Login({userRepository, setToken}: { userRepository: LoginReposit
         }
     }
 
-    return <div className={styles.component}>
+    return <div>
         <header className={styles.header}>
             <section className={styles.header__container}>
-                <img src={brand} alt="brand" className={styles.header__brand}/>
+                <img src={brand} alt="Siesta" className={styles.header__brand}/>
             </section>
         </header>
-        <div className={styles.login}>
-            <h1>Esto es zona privada!</h1>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.text_area}>
-                    <input
-                        type="text"
-                        name="username"
-                        className={styles.text_input}
-                        placeholder="email"
-                        onChange={e => setEmail(e.target.value)}/>
+        <div className={styles.perforation}/>
+        <div className={styles.component}>
+            <div className={styles.pass}>
+                <div className={styles.pass__band}>Pase de jurado</div>
+                <div className={styles.pass__body}>
+                    <p className={styles.pass__eyebrow}>Acceso restringido</p>
+                    <h1 className={styles.pass__title}>Esto es zona privada!</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label className={styles.field}>
+                            <span className={styles.field__label}>Email</span>
+                            <input
+                                type="text"
+                                name="username"
+                                className={styles.field__input}
+                                placeholder="tu@email.com"
+                                onChange={e => setEmail(e.target.value)}/>
+                        </label>
+                        <label className={styles.field}>
+                            <span className={styles.field__label}>Contraseña</span>
+                            <input
+                                type="password"
+                                name="password"
+                                className={styles.field__input}
+                                placeholder="••••••••"
+                                onChange={e => setPassword(e.target.value)}/>
+                        </label>
+                        <input type="submit" value="Entrar" className={styles.btn}/>
+                    </form>
+                    {error ? <div className={styles.error}>{error}</div> : null}
                 </div>
-                <div className={styles.text_area}>
-                    <input
-                        type="password"
-                        name="password"
-                        className={styles.text_input}
-                        placeholder="password"
-                        onChange={e => setPassword(e.target.value)}/>
-                </div>
-                <div>
-                    <input type="submit" value="Login" className={styles.btn}/>
-                </div>
-            </form>
-            {error ? <div>{error}</div>: null }
+            </div>
         </div>
-        </div>
-        ;
-        }
+    </div>;
+}

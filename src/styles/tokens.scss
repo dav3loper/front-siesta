@@ -1,0 +1,42 @@
+:root {
+  // Surfaces
+  --ink: #14110f;
+  --ink-raised: #1f1a15;
+  --paper: #f2e9d8;
+  --paper-dim: #e4d6b8;
+
+  // Ballot accents — one per vote state, not decoration
+  --marquee: #e8a93a; // quiero verla
+  --curtain: #a63232; // no querer
+  --reel: #2f6e62;    // podría verla
+  --smoke: #8a8175;   // sin votar
+
+  // Text
+  --ink-text: #efe6d4;
+  --ink-text-muted: #b9ac93;
+  --paper-text: #14110f;
+  --paper-text-muted: #6b6455;
+
+  // Type
+  --font-display: 'Anton', 'Arial Narrow Bold', sans-serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  // Layout
+  --header-height: 7rem;
+  --radius: 6px;
+}
+
+@mixin perforation($color: var(--ink)) {
+  height: 10px;
+  background-image: radial-gradient(circle, $color 2.5px, transparent 2.6px);
+  background-size: 18px 100%;
+  background-repeat: repeat-x;
+  background-position: 9px 50%;
+}
+
+@mixin stamp-texture {
+  background-image:
+    repeating-conic-gradient(rgba(0, 0, 0, 0.18) 0deg 4deg, transparent 4deg 12deg);
+  background-blend-mode: multiply;
+}

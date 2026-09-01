@@ -1,32 +1,124 @@
-.container {
-  display: flex;
-  --maxWidth: 15rem;
-  --maxHeight: 15rem;
-  place-content: center;
-  align-items: start;
-  margin: 10px;
+@import "../../styles/tokens";
 
+.page {
+  min-height: calc(100vh - var(--header-height) - 10px);
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
-.film_festival {
-  border:solid 5px;
+.error {
+  font-family: var(--font-mono);
+  color: var(--curtain);
+}
 
-  &__logo {
+.ticket {
+  display: flex;
+  width: 100%;
+  max-width: 40rem;
+  background: var(--paper);
+  color: var(--paper-text);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
+
+  &__poster {
+    flex: 0 0 11rem;
     display: block;
-    max-width: var(--maxWidth);
-    max-height: var(--maxHeight);
+    width: 11rem;
+    height: 100%;
+    object-fit: cover;
+
+    @media (max-width: 640px) {
+      width: 100%;
+      height: 14rem;
+    }
+  }
+
+  &__perforation {
+    flex: 0 0 10px;
+    width: 10px;
+    background-image: radial-gradient(circle, var(--paper) 2.5px, transparent 2.6px);
+    background-size: 100% 18px;
+    background-repeat: repeat-y;
+    background-position: 50% 9px;
+    background-color: var(--paper-dim);
+
+    @media (max-width: 640px) {
+      @include perforation(var(--paper));
+      width: 100%;
+      height: 10px;
+    }
+  }
+
+  &__stub {
+    flex: 1;
+    padding: 1.75rem 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper-text-muted);
+    margin: 0 0 0.35rem;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 1.75rem;
+    line-height: 1.05;
+    margin: 0 0 0.5rem;
+  }
+
+  &__meta {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--paper-text-muted);
+    margin: 0 0 1.5rem;
+  }
+
+  &__actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 }
 
-.btn{
-  margin-top: 28px;
-  width: 165px;
-  height: 60px;
-  border-radius: 30px;
-  background: #ebe8e0;
-  border: none;
-  font-family: 'Montserrat', monospace;
-  font-size: 20px;
-  color: #0a0a00;
+.cta {
+  display: inline-block;
+  padding: 0.7rem 1.25rem;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 1rem;
+  text-decoration: none;
   cursor: pointer;
+
+  &--primary {
+    background: var(--marquee);
+    color: var(--ink);
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--paper-text);
+    border: 2px solid var(--paper-text);
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
 }
