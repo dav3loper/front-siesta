@@ -22,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "scripts:enrich-movies": "tsx scripts/enrichMovies.ts",
+    "scripts:import-movies": "tsx scripts/importMovies.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +45,8 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.77.8"
+    "dotenv": "^16.4.5",
+    "sass": "^1.77.8",
+    "tsx": "^4.19.1"
   }
 }
