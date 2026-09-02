@@ -1,6 +1,6 @@
 import React from 'react';
 import useToken from "./sections/Login/UseToken";
-import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {DashboardFactory} from "./sections/Dashboard/DashboardFactory";
 import {MovieDetailFactory} from "./sections/Movie/MovieDetailFactory";
 import {LoginFactory} from "./sections/Login/LoginFactory";

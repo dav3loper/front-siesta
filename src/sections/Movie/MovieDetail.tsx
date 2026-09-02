@@ -30,6 +30,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
         repository.findById(Number(id.id), token.token).then((movieData) => {
             setMovieData(movieData)
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
             setVoteList(voteListData);
             setGroupData(groupData);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -58,6 +60,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
             }
             setVoteList(newVoteList);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [groupData]);
 
     if (movieData === undefined || groupData === undefined) {

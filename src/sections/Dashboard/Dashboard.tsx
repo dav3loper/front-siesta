@@ -20,6 +20,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
 
     useEffect(() => {
         filmFestivalRepository.findAll().then((filmFestivalData) => setFilmFestivalData(filmFestivalData))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [nextMovie, setNextMovie] = useState<Movie>();
@@ -28,6 +29,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
         voteRepository.findNextByUserIdAndFilmFestival(filmFestivalId, token.token)
             .then((movie) => setNextMovie(movie))
             .catch((err) => setError(err.message))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

@@ -28,6 +28,7 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
             })
             .catch(error => console.error(error));
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <section className={styles.page}>
