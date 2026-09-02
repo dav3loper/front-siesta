@@ -24,37 +24,39 @@ export function Login({userRepository, setToken}: { userRepository: LoginReposit
         }
     }
 
-    return <div className={styles.component}>
-        <header className={styles.header}>
-            <section className={styles.header__container}>
-                <img src={brand} alt="brand" className={styles.header__brand}/>
-            </section>
-        </header>
-        <div className={styles.login}>
-            <h1>Esto es zona privada!</h1>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.text_area}>
-                    <input
-                        type="text"
-                        name="username"
-                        className={styles.text_input}
-                        placeholder="email"
-                        onChange={e => setEmail(e.target.value)}/>
-                </div>
-                <div className={styles.text_area}>
-                    <input
-                        type="password"
-                        name="password"
-                        className={styles.text_input}
-                        placeholder="password"
-                        onChange={e => setPassword(e.target.value)}/>
-                </div>
-                <div>
-                    <input type="submit" value="Login" className={styles.btn}/>
-                </div>
-            </form>
-            {error ? <div>{error}</div>: null }
+    return <div className={styles.screen}>
+        <div className={styles.terminal}>
+            <div className={styles.bar}>
+                <span>Sitges // Terminal de acceso</span>
+                <span className={styles.barLed}/>
+            </div>
+            <div className={styles.body}>
+                <img src={brand} alt="Siesta" className={styles.brand}/>
+                <h1 className={styles.title}>Esto es zona privada!</h1>
+                <p className={styles.subtitle}>Identifícate para interceptar la señal</p>
+                <form onSubmit={handleSubmit}>
+                    <label className={styles.field}>
+                        <span className={styles.field__label}>Email</span>
+                        <input
+                            type="text"
+                            name="username"
+                            className={styles.field__input}
+                            placeholder="tu@email.com"
+                            onChange={e => setEmail(e.target.value)}/>
+                    </label>
+                    <label className={styles.field}>
+                        <span className={styles.field__label}>Clave</span>
+                        <input
+                            type="password"
+                            name="password"
+                            className={styles.field__input}
+                            placeholder="••••••••"
+                            onChange={e => setPassword(e.target.value)}/>
+                    </label>
+                    <input type="submit" value="Conectar" className={styles.btn}/>
+                </form>
+                {error ? <div className={styles.error}>{error}</div> : null}
+            </div>
         </div>
-        </div>
-        ;
-        }
+    </div>;
+}

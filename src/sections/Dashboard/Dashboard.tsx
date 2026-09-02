@@ -20,6 +20,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
 
     useEffect(() => {
         filmFestivalRepository.findAll().then((filmFestivalData) => setFilmFestivalData(filmFestivalData))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [nextMovie, setNextMovie] = useState<Movie>();
@@ -28,19 +29,34 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
         voteRepository.findNextByUserIdAndFilmFestival(filmFestivalId, token.token)
             .then((movie) => setNextMovie(movie))
             .catch((err) => setError(err.message))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
+    const formatDate = (date: Date) => date.toLocaleDateString('es-ES', {day: 'numeric', month: 'short'});
+
     return (
-        <section className={styles.container}>
+        <section className={styles.page}>
             {filmFestivalData.map((filmFestival) => (
-                <article key={filmFestival.id} className={styles.film_festival}>
-                    <img alt={filmFestival.name} src={lastEditionLogo} className={styles.film_festival__logo}/>
-                    <a className={styles.btn} href={`/movie/${nextMovie?.id}`}> Votar </a>
-                    <a className={styles.btn} href={`/film-festival/${filmFestival.id}/list`}>Ver listado</a>
+                <article key={filmFestival.id} className={styles.file}>
+                    <div className={styles.posterWrap}>
+                        <img alt={filmFestival.name} src={lastEditionLogo} className={styles.poster}/>
+                        <div className={styles.scan}/>
+                    </div>
+                    <div className={styles.stub}>
+                        <p className={styles.eyebrow}>Expediente · Festival</p>
+                        <h2 className={styles.title}>{filmFestival.name}</h2>
+                        <p className={styles.meta}>
+                            {filmFestival.edition}ª edición · {formatDate(filmFestival.startsAt)}–{formatDate(filmFestival.endsAt)}
+                        </p>
+                        <div className={styles.actions}>
+                            <a className={`${styles.cta} ${styles["cta--primary"]}`} href={`/movie/${nextMovie?.id}`}>&gt; Votar</a>
+                            <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>&gt; Ver listado</a>
+                        </div>
+                    </div>
                 </article>
             ))}
-            {error ? <p>{error}</p> : null}
+            {error ? <p className={styles.error}>{error}</p> : null}
         </section>
     );
 }
