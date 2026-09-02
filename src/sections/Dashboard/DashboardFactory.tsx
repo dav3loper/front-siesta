@@ -1,10 +1,10 @@
 import React from "react";
 import {Dashboard} from "./Dashboard";
-import {FakeFilmFestivalRepository} from "../../infrastructure/Dashboard/FakeFilmFestivalRepository";
-import {AsyncFetchVoteRepository} from "../../infrastructure/Dashboard/AsyncFetchVoteRepository";
+import {FirebaseFilmFestivalRepository} from "../../infrastructure/Dashboard/FirebaseFilmFestivalRepository";
+import {FirebaseVoteRepository} from "../../infrastructure/Dashboard/FirebaseVoteRepository";
 
-const filmFestivalRepository = new FakeFilmFestivalRepository();
-const voteRepository = new AsyncFetchVoteRepository(process.env.REACT_APP_API_BASE_URL ?? '');
+const filmFestivalRepository = new FirebaseFilmFestivalRepository();
+const voteRepository = new FirebaseVoteRepository();
 
 export class DashboardFactory {
     static create(): React.ReactElement {

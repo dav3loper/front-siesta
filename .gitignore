@@ -24,3 +24,6 @@ yarn-error.log*
 
 .idea/
 .env
+
+# borradores generados por scripts/enrichMovies.ts
+scripts/data/movies.draft.*.json
