@@ -30,15 +30,25 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
 
     }, []);
 
-    return <>
-        <h2>Listado de películas: </h2>
+    return <section className={styles.page}>
+        <h2 className={styles.heading}>Registro de expedientes</h2>
         {movieList.map((movieWithVote) => (
-            <article className={styles.movie__row} key={movieWithVote.id}>
-                <a href={movieWithVote.link}><span>{movieWithVote.title}</span></a>
-                <div>[{movieWithVote.alias}]</div>
-                <div>{movieWithVote.votes.sort(sortVotes).reduce((accumulated, vote: VoteData) => accumulated+vote.user_name, '')}</div>
+            <article className={styles.row} key={movieWithVote.id}>
+                <span className={styles.code}>EXP-{String(movieWithVote.id).padStart(2, '0')}</span>
+                {movieWithVote.link
+                    ? <a className={styles.title} href={movieWithVote.link}>{movieWithVote.title}</a>
+                    : <span className={styles.title}>{movieWithVote.title}</span>}
+                {movieWithVote.alias && <span className={styles.alias}>{movieWithVote.alias}</span>}
+                <div className={styles.votes}>
+                    {movieWithVote.votes.sort(sortVotes).map((vote: VoteData) => (
+                        <span key={vote.user_id} className={styles.chip} data-score={vote.score}
+                              title={`${vote.user_name}`}>
+                            {vote.user_name[0]?.toUpperCase()}
+                        </span>
+                    ))}
+                </div>
             </article>
         ))
         }
-    </>;
+    </section>;
 }

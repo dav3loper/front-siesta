@@ -1,86 +1,139 @@
-body{
-  background: linear-gradient(135deg, #a8bbb0, #ebe8e0);
-  width: 100%;
-  height: 100vh;
-  text-align: center;
-}
+@import "../../styles/tokens";
 
-.component{
-  background: linear-gradient(135deg, #a8bbb0, #ebe8e0);
-  height: 100vh;
-  width: 100%;
-  text-align: center;
-}
-
-
-h1{
-  font-family: 'Segoe UI', bold, monospace;
-  font-size: 35px;
-  margin-top: 4rem;
-  margin-bottom: 2rem;
-}
-
-form{
-  display: inline-block;
+.screen {
+  min-height: 100vh;
+  display: flex;
   align-items: center;
-  height: 300px;
-  width: 350px;
-  margin-bottom: 170px;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  background: var(--void);
 }
-.text_area{
-  align-content: center;
-  border-radius: 22px;
-  margin-bottom: 35px;
+
+.terminal {
   width: 100%;
-  height: 64px;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+  max-width: 26rem;
+  background: var(--void-raised);
+  border: 1px solid var(--void-line);
+  @include cut-corner(24px);
 }
 
-.text_input{
-  font-family: 'Montserrat regular', fantasy;
-  font-size: 20px;
-  border: none;
-  width: 80%;
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--void-line);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
-.btn{
-  margin-top: 28px;
-  width: 165px;
-  height: 60px;
-  border-radius: 30px;
-  background: #d01110;
-  border: none;
-  font-family: 'Montserrat', monospace;
-  font-size: 20px;
-  font-weight: bold;
-  color: #FFFFFF;
-  cursor: pointer;
+.barLed {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--alarm);
+  box-shadow: 0 0 6px var(--alarm);
 }
 
-.login{
-  display: inline-block;
-  background: #FFFFFF;
-  width: 375px;
-  height: 700px;
-  margin-top: 10%;
-  border-radius: 22px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.body {
+  padding: 2rem 1.75rem 2.25rem;
 }
 
-.header {
-  height: var(--header-height);
-  background-color: #000000;
+.brand {
+  display: block;
+  width: 6.5rem;
+  margin: 0 auto 1.5rem;
+  mix-blend-mode: screen;
+}
 
-  &__container {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    justify-content: center;
-    margin: 0 0;
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.field {
+  display: block;
+  margin-bottom: 1.15rem;
+
+  &__label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--phosphor);
+    margin-bottom: 0.35rem;
+
+    &::before {
+      content: "> ";
+    }
   }
 
-  &__brand {
-    max-width: 15rem;
-    max-height: 6.25rem;
+  &__input {
+    width: 100%;
+    border: 1px solid var(--void-line);
+    background: var(--void);
+    padding: 0.65rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text);
+    border-radius: 0;
+
+    &:focus {
+      border-color: var(--phosphor);
+      outline: none;
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.8rem 1rem;
+  border: none;
+  background: var(--phosphor);
+  color: var(--void);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+  cursor: pointer;
+  @include cut-corner(12px);
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+.error {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--alarm);
+
+  &::before {
+    content: "[ERROR] ";
   }
 }
