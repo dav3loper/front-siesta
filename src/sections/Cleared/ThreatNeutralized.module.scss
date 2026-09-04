@@ -1,0 +1,127 @@
+@import "../../styles/tokens";
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.75rem;
+}
+
+.panel {
+  width: 100%;
+  max-width: 34rem;
+  background: var(--void-raised);
+  border: 1px solid var(--void-line);
+  color: var(--text);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  @include cut-corner(28px);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 2rem;
+}
+
+.radar {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--void-line);
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--void-line);
+  }
+
+  &::before {
+    inset: 1.15rem;
+  }
+
+  &::after {
+    inset: 2.3rem;
+  }
+}
+
+.radarSweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(124, 255, 178, 0.55), transparent 35%);
+  animation: sweep 1.6s ease-out 1;
+  animation-fill-mode: forwards;
+}
+
+.radarCore {
+  position: absolute;
+  inset: 2.9rem;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow: 0 0 18px 4px rgba(124, 255, 178, 0.55);
+}
+
+@keyframes sweep {
+  from {
+    transform: rotate(0deg);
+    opacity: 0.9;
+  }
+  to {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radarSweep {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  color: var(--phosphor);
+  line-height: 1.05;
+  margin: 0 0 1rem;
+}
+
+.body {
+  font-family: var(--font-type);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 2.25rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.65rem 1.1rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--void);
+  background: var(--phosphor);
+  cursor: pointer;
+  @include cut-corner(10px);
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
