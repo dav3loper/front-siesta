@@ -48,7 +48,11 @@ export function FilmFestivalCard({filmFestival, voteRepository, token}: {
                         : <p className={`${styles.stamp} ${styles["stamp--clear"]}`}>Al día</p>
                 )}
                 <div className={styles.actions}>
-                    <a className={`${styles.cta} ${styles["cta--primary"]}`} href={`/movie/${nextMovie?.id}`}>&gt; Votar</a>
+                    {pendingVotes === 0
+                        ? <a className={`${styles.cta} ${styles["cta--primary"]}`}
+                             href={`/film-festival/${filmFestival.id}/cleared`}>&gt; Ver estado</a>
+                        : <a className={`${styles.cta} ${styles["cta--primary"]}`}
+                             href={`/movie/${nextMovie?.id}`}>&gt; Votar</a>}
                     <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>&gt; Ver listado</a>
                 </div>
                 {error ? <p className={styles.error}>{error}</p> : null}
