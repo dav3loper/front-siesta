@@ -11,11 +11,19 @@ export function FilmFestivalCard({filmFestival, voteRepository, token}: {
     token: string
 }) {
     const [nextMovie, setNextMovie] = useState<Movie>();
+    const [pendingVotes, setPendingVotes] = useState<number>();
     const [error, setError] = useState('');
 
     useEffect(() => {
         voteRepository.findNextByUserIdAndFilmFestival(filmFestival.id, token)
             .then((movie) => setNextMovie(movie))
+            .catch((err) => setError(err.message))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        voteRepository.countPendingVotes(filmFestival.id, token)
+            .then((count) => setPendingVotes(count))
             .catch((err) => setError(err.message))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -34,6 +42,11 @@ export function FilmFestivalCard({filmFestival, voteRepository, token}: {
                 <p className={styles.meta}>
                     {filmFestival.edition}ª edición · {formatDate(filmFestival.startsAt)}–{formatDate(filmFestival.endsAt)}
                 </p>
+                {pendingVotes !== undefined && (
+                    pendingVotes > 0
+                        ? <p className={styles.stamp}>Pendientes · {pendingVotes}</p>
+                        : <p className={`${styles.stamp} ${styles["stamp--clear"]}`}>Al día</p>
+                )}
                 <div className={styles.actions}>
                     <a className={`${styles.cta} ${styles["cta--primary"]}`} href={`/movie/${nextMovie?.id}`}>&gt; Votar</a>
                     <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>&gt; Ver listado</a>

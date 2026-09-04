@@ -88,6 +88,25 @@
   margin: 0 0 1.5rem;
 }
 
+.stamp {
+  align-self: flex-start;
+  margin: 0 0 1rem;
+  padding: 0.3rem 0.65rem;
+  border: 2px solid var(--amber);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+
+  &--clear {
+    border-color: var(--phosphor);
+    color: var(--phosphor);
+  }
+}
+
 .actions {
   margin-top: auto;
   display: flex;

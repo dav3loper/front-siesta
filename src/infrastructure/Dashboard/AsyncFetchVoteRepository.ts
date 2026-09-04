@@ -24,4 +24,21 @@ export class AsyncFetchVoteRepository implements VoteRepository {
             });
     }
 
+    countPendingVotes(filmFestivalId: string, token: string): Promise<number> {
+        return fetch(this.host+`/film-festival/${filmFestivalId}/pending-votes`, {
+            mode: 'cors',
+            method: 'GET',
+            headers : {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Algo ha ido mal');
+            })
+            .then((body: { count: number }) => body.count);
+    }
+
 }
