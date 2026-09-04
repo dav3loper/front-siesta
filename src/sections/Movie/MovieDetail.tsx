@@ -10,6 +10,8 @@ import {decodeToken} from "react-jwt";
 import {TokenData} from "../Login/TokenData";
 import {VoteRepository} from "../../domain/Vote/VoteRepository";
 import {VoteData} from "../../domain/Vote/VoteData";
+import {yearForFestival} from "../../domain/Movie/festivalYear";
+import {useAgentContext} from "../Agent/AgentContext";
 
 export function MovieDetail({repository, userRepository, voteRepository}: {
                                 repository: MovieRepository,
@@ -25,6 +27,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     const [movieData, setMovieData] = useState<Movie>();
     const [groupData, setGroupData] = useState<Group>();
     const [voteList, setVoteList] = useState<VoteData[]>([]);
+    const {setMovieContext} = useAgentContext();
 
     useEffect(() => {
         repository.findById(Number(id.id), token.token).then((movieData) => {
@@ -32,6 +35,14 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (movieData) {
+            setMovieContext({title: movieData.title, year: yearForFestival(movieData.film_festival_id)});
+        }
+        return () => setMovieContext(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [movieData]);
 
     useEffect(() => {
         userRepository.usersFromGroup(Number(tokenData.group_id), token.token).then(function (groupData) {
