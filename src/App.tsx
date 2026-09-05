@@ -5,6 +5,7 @@ import {DashboardFactory} from "./sections/Dashboard/DashboardFactory";
 import {MovieDetailFactory} from "./sections/Movie/MovieDetailFactory";
 import {LoginFactory} from "./sections/Login/LoginFactory";
 import {FilmFestivalVoteListFactory} from "./sections/List/FilmFestivalVoteListFactory";
+import {FilmFestivalRatingListFactory} from "./sections/Rating/FilmFestivalRatingListFactory";
 import {Layout} from "./sections/Layout/Layout";
 import {ThreatNeutralized} from "./sections/Cleared/ThreatNeutralized";
 
@@ -24,6 +25,7 @@ function App() {
                     {/*<Route path="/login" element={LoginFactory(setToken)} />*/}
                     <Route path="/movie/:id" element={MovieDetailFactory.create()}/>
                     <Route path="/film-festival/:id/list" element={FilmFestivalVoteListFactory.create()}/>
+                    <Route path="/film-festival/:id/ratings" element={FilmFestivalRatingListFactory.create()}/>
                     <Route path="/film-festival/:id/cleared" element={<ThreatNeutralized/>}/>
                 </Route>
             </Routes>

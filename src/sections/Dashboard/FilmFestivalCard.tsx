@@ -54,6 +54,7 @@ export function FilmFestivalCard({filmFestival, voteRepository, token}: {
                         : <a className={`${styles.cta} ${styles["cta--primary"]}`}
                              href={`/movie/${nextMovie?.id}`}>&gt; Votar</a>}
                     <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/list`}>&gt; Ver listado</a>
+                    <a className={`${styles.cta} ${styles["cta--ghost"]}`} href={`/film-festival/${filmFestival.id}/ratings`}>&gt; Calificar</a>
                 </div>
                 {error ? <p className={styles.error}>{error}</p> : null}
             </div>
