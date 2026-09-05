@@ -23,14 +23,14 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
 
     //TODO: Move all token management to class
     const {token} = useToken();
-    const tokenData = decodeToken(token.token) as TokenData;
+    const tokenData = decodeToken(token) as TokenData;
     const [movieData, setMovieData] = useState<Movie>();
     const [groupData, setGroupData] = useState<Group>();
     const [voteList, setVoteList] = useState<VoteData[]>([]);
     const {setMovieContext} = useAgentContext();
 
     useEffect(() => {
-        repository.findById(Number(id.id), token.token).then((movieData) => {
+        repository.findById(Number(id.id), token).then((movieData) => {
             setMovieData(movieData)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +45,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
     }, [movieData]);
 
     useEffect(() => {
-        userRepository.usersFromGroup(Number(tokenData.group_id), token.token).then(function (groupData) {
+        userRepository.usersFromGroup(Number(tokenData.group_id), token).then(function (groupData) {
             const userList = groupData.user_list;
             let voteListData = [];
             for (const user of userList) {
@@ -62,7 +62,7 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
         if (!groupData) {
             return;
         }
-        voteRepository.getVotesForMovie(id.id, token.token).then((voteResponse) => {
+        voteRepository.getVotesForMovie(id.id, token).then((voteResponse) => {
             let newVoteList = [];
             const votesDone = voteResponse.votes;
             for(const initialVote of voteList){
@@ -80,9 +80,9 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const result = await voteRepository.vote(id.id, voteList, token.token);
+        const result = await voteRepository.vote(id.id, voteList, token);
         if (result.ok) {
-            const next = await voteRepository.findNextByUserIdAndFilmFestival(movieData.film_festival_id, token.token);
+            const next = await voteRepository.findNextByUserIdAndFilmFestival(movieData.film_festival_id, token);
             window.location.href = `/movie/${next.id}`;
         }
 

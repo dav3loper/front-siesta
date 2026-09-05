@@ -15,7 +15,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        filmFestivalRepository.findAll(token.token)
+        filmFestivalRepository.findAll(token)
             .then((filmFestivalData) => setFilmFestivalData(filmFestivalData))
             .catch((err) => setError(err.message))
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,7 +25,7 @@ export function Dashboard({filmFestivalRepository, voteRepository}: {
         <section className={styles.page}>
             {filmFestivalData.map((filmFestival) => (
                 <FilmFestivalCard key={filmFestival.id} filmFestival={filmFestival}
-                                   voteRepository={voteRepository} token={token.token}/>
+                                   voteRepository={voteRepository} token={token}/>
             ))}
             {error ? <p className={styles.error}>{error}</p> : null}
         </section>

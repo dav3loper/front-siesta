@@ -67,7 +67,7 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
         setUnknownTitles([]);
 
         try {
-            await agentRepository.streamChat(text, thread.conversationId, token.token, {
+            await agentRepository.streamChat(text, thread.conversationId, token, {
                 onDelta: (delta) => {
                     setThread((prev) => {
                         const messages = [...prev.messages];
