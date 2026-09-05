@@ -7,10 +7,10 @@ export class AsyncFetchAgentRepository implements AgentRepository {
         this.host = host;
     }
 
-    async streamChat(message: string, token: string, handlers: AgentStreamHandlers, movieContext?: MovieContext): Promise<void> {
+    async streamChat(message: string, conversationId: string, token: string, handlers: AgentStreamHandlers, movieContext?: MovieContext): Promise<void> {
         const body = movieContext
-            ? {message, context: {movie_title: movieContext.title, movie_year: movieContext.year}}
-            : {message};
+            ? {message, conversation_id: conversationId, context: {movie_title: movieContext.title, movie_year: movieContext.year}}
+            : {message, conversation_id: conversationId};
 
         const response = await fetch(this.host + `/agent/chat`, {
             mode: 'cors',

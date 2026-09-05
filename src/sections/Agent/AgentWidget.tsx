@@ -1,19 +1,54 @@
-import {FormEvent, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import {AgentRepository} from "../../domain/Agent/AgentRepository";
 import {ChatMessage} from "../../domain/Agent/ChatMessage";
 import useToken from "../Login/UseToken";
 import {useAgentContext} from "./AgentContext";
 import styles from "./AgentWidget.module.scss";
 
+const THREAD_STORAGE_KEY = 'agent-thread';
+
+interface AgentThread {
+    pathname: string;
+    conversationId: string;
+    messages: ChatMessage[];
+}
+
+function loadThread(pathname: string): AgentThread {
+    const stored = sessionStorage.getItem(THREAD_STORAGE_KEY);
+    if (stored) {
+        const thread = JSON.parse(stored) as AgentThread;
+        if (thread.pathname === pathname) {
+            return thread;
+        }
+    }
+    return {pathname, conversationId: crypto.randomUUID(), messages: []};
+}
+
 export function AgentWidget({agentRepository}: { agentRepository: AgentRepository }) {
     const {token} = useToken();
     const {movieContext} = useAgentContext();
+    const {pathname} = useLocation();
     const [open, setOpen] = useState(false);
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [thread, setThread] = useState<AgentThread>(() => loadThread(pathname));
     const [draft, setDraft] = useState('');
     const [sending, setSending] = useState(false);
     const [error, setError] = useState('');
     const [unknownTitles, setUnknownTitles] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (thread.pathname !== pathname) {
+            setThread(loadThread(pathname));
+            return;
+        }
+        sessionStorage.setItem(THREAD_STORAGE_KEY, JSON.stringify(thread));
+    }, [pathname, thread]);
+
+    const startNewConversation = () => {
+        setError('');
+        setUnknownTitles([]);
+        setThread({pathname, conversationId: crypto.randomUUID(), messages: []});
+    };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,19 +57,25 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
             return;
         }
 
-        setMessages((prev) => [...prev, {role: 'user', text}, {role: 'agent', text: ''}]);
+        setThread((prev) => ({
+            ...prev,
+            messages: [...prev.messages, {role: 'user', text}, {role: 'agent', text: ''}]
+        }));
         setDraft('');
         setSending(true);
         setError('');
         setUnknownTitles([]);
 
         try {
-            await agentRepository.streamChat(text, token.token, {
+            await agentRepository.streamChat(text, thread.conversationId, token.token, {
                 onDelta: (delta) => {
-                    setMessages((prev) => {
-                        const next = [...prev];
-                        next[next.length - 1] = {role: 'agent', text: next[next.length - 1].text + delta};
-                        return next;
+                    setThread((prev) => {
+                        const messages = [...prev.messages];
+                        messages[messages.length - 1] = {
+                            role: 'agent',
+                            text: messages[messages.length - 1].text + delta
+                        };
+                        return {...prev, messages};
                     });
                 },
                 onUnknownTitles: (titles) => setUnknownTitles(titles),
@@ -56,7 +97,13 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
                             <span className={`${styles.led} ${sending ? styles["led--active"] : ''}`}/>
                             {sending ? 'Transmitiendo' : 'Canal abierto'}
                         </span>
-                        <button type="button" className={styles.close} onClick={() => setOpen(false)}>×</button>
+                        <span className={styles.actions}>
+                            <button type="button" className={styles.reset} onClick={startNewConversation}
+                                    disabled={sending || thread.messages.length === 0}>
+                                {'// nuevo hilo'}
+                            </button>
+                            <button type="button" className={styles.close} onClick={() => setOpen(false)}>×</button>
+                        </span>
                     </div>
                     {movieContext && (
                         <p className={styles.context}>
@@ -64,10 +111,10 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
                         </p>
                     )}
                     <div className={styles.log}>
-                        {messages.length === 0 && (
+                        {thread.messages.length === 0 && (
                             <p className={styles.hint}>{'// Agente de guardia. Pregunta lo que necesites.'}</p>
                         )}
-                        {messages.map((message, index) => (
+                        {thread.messages.map((message, index) => (
                             <p key={index} className={`${styles.line} ${styles[`line--${message.role}`]}`}>
                                 <span className={styles.tag}>{message.role === 'user' ? 'tú' : 'agente'}</span>
                                 {message.text}

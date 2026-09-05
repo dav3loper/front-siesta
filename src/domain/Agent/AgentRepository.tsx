@@ -10,5 +10,5 @@ export interface AgentStreamHandlers {
 }
 
 export interface AgentRepository {
-    streamChat(message: string, token: string, handlers: AgentStreamHandlers, movieContext?: MovieContext): Promise<void>;
+    streamChat(message: string, conversationId: string, token: string, handlers: AgentStreamHandlers, movieContext?: MovieContext): Promise<void>;
 }
