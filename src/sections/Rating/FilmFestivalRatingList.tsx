@@ -62,7 +62,7 @@ export function FilmFestivalRatingList({ratingRepository}: { ratingRepository: R
         <article className={styles.row} key={movie.id}>
             <span className={styles.code}>EXP-{String(movie.id).padStart(2, '0')}</span>
             <span className={styles.identity}>
-                <span className={styles.title}>{movie.title}</span>
+                <a className={styles.title} href={`/movie/${movie.id}`}>{movie.title}</a>
                 {movie.section && <span className={styles.section}>{movie.section}</span>}
             </span>
             <span className={styles.average}>

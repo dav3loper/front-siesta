@@ -102,6 +102,11 @@ $scale: (1: var(--alarm), 2: var(--amber), 3: var(--amber), 4: var(--phosphor), 
 .title {
   font-size: 1rem;
   color: var(--text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--phosphor);
+  }
 }
 
 .section {
