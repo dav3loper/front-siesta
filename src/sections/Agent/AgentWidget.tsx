@@ -13,6 +13,7 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
     const [draft, setDraft] = useState('');
     const [sending, setSending] = useState(false);
     const [error, setError] = useState('');
+    const [unknownTitles, setUnknownTitles] = useState<string[]>([]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -25,14 +26,19 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
         setDraft('');
         setSending(true);
         setError('');
+        setUnknownTitles([]);
 
         try {
-            await agentRepository.streamChat(text, token.token, (delta) => {
-                setMessages((prev) => {
-                    const next = [...prev];
-                    next[next.length - 1] = {role: 'agent', text: next[next.length - 1].text + delta};
-                    return next;
-                });
+            await agentRepository.streamChat(text, token.token, {
+                onDelta: (delta) => {
+                    setMessages((prev) => {
+                        const next = [...prev];
+                        next[next.length - 1] = {role: 'agent', text: next[next.length - 1].text + delta};
+                        return next;
+                    });
+                },
+                onUnknownTitles: (titles) => setUnknownTitles(titles),
+                onStreamError: (streamError) => setError(streamError)
             }, movieContext);
         } catch (err) {
             setError((err as Error).message);
@@ -67,6 +73,11 @@ export function AgentWidget({agentRepository}: { agentRepository: AgentRepositor
                                 {message.text}
                             </p>
                         ))}
+                        {unknownTitles.length > 0 && (
+                            <p className={styles.warning}>
+                                {'// Sin confirmar en el catálogo: '}{unknownTitles.join(', ')}
+                            </p>
+                        )}
                         {error && <p className={styles.error}>{error}</p>}
                     </div>
                     <form className={styles.form} onSubmit={handleSubmit}>

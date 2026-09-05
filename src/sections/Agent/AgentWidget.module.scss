@@ -156,6 +156,13 @@
   margin-bottom: 0.15rem;
 }
 
+.warning {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--amber);
+  margin: 0;
+}
+
 .error {
   font-family: var(--font-mono);
   font-size: 0.78rem;
