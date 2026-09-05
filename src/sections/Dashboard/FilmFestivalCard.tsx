@@ -15,18 +15,21 @@ export function FilmFestivalCard({filmFestival, voteRepository, token}: {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        voteRepository.findNextByUserIdAndFilmFestival(filmFestival.id, token)
-            .then((movie) => setNextMovie(movie))
-            .catch((err) => setError(err.message))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
         voteRepository.countPendingVotes(filmFestival.id, token)
             .then((count) => setPendingVotes(count))
             .catch((err) => setError(err.message))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (pendingVotes === undefined || pendingVotes === 0) {
+            return;
+        }
+        voteRepository.findNextByUserIdAndFilmFestival(filmFestival.id, token)
+            .then((movie) => setNextMovie(movie))
+            .catch((err) => setError(err.message))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pendingVotes]);
 
     const formatDate = (date: Date) => date.toLocaleDateString('es-ES', {day: 'numeric', month: 'short'});
 
