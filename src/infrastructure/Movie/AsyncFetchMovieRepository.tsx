@@ -1,4 +1,5 @@
 import { Movie } from "../../domain/Movie/Movie";
+import {MovieMaterial} from "../../domain/Movie/MovieMaterial";
 import {MovieRepository} from "../../domain/Movie/MovieRepository";
 
 export class AsyncFetchMovieRepository implements MovieRepository {
@@ -39,6 +40,21 @@ export class AsyncFetchMovieRepository implements MovieRepository {
             });
     }
 
-
-
+    discardMaterial(id: number, material: MovieMaterial, token: string): Promise<Movie> {
+        return fetch(this.host+`/movie/${id}/media`, {
+            mode: 'cors',
+            method: 'PATCH',
+            headers : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({[material]: null})
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Algo ha ido mal');
+            });
+    }
 }

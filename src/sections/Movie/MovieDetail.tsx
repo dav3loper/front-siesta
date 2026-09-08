@@ -12,6 +12,7 @@ import {VoteRepository} from "../../domain/Vote/VoteRepository";
 import {VoteData} from "../../domain/Vote/VoteData";
 import {yearForFestival} from "../../domain/Movie/festivalYear";
 import {useAgentContext} from "../Agent/AgentContext";
+import {MaterialCustody} from "./MaterialCustody";
 
 export function MovieDetail({repository, userRepository, voteRepository}: {
                                 repository: MovieRepository,
@@ -150,6 +151,13 @@ export function MovieDetail({repository, userRepository, voteRepository}: {
                           allow="autoplay; encrypted-media" allowFullScreen></iframe>
                 : <div className={styles.trailerPlaceholder}>Sin señal de vídeo</div>}
         </div>
+
+        <MaterialCustody movieId={movieData.id}
+                         poster={movieData.poster}
+                         trailer={movieData.trailer}
+                         repository={repository}
+                         token={token}
+                         onDiscarded={(updatedMovie) => setMovieData(updatedMovie)}/>
 
         {movieData.summary && <p className={styles.summary}>{movieData.summary}</p>}
 

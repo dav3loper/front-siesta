@@ -1,0 +1,145 @@
+@import "../../styles/tokens";
+
+.custody {
+  border: 1px solid var(--void-line);
+  background: var(--void-raised);
+  padding: 1.15rem 1.35rem 0.6rem;
+  margin-bottom: 2.75rem;
+  @include cut-corner(18px);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+  margin: 0;
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0.4rem 0 0.9rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 0.85rem 0 0.85rem 0.85rem;
+  border-top: 1px solid var(--void-line);
+  border-left: 2px solid transparent;
+}
+
+.row--armed {
+  border-left-color: var(--alarm);
+  background: color-mix(in srgb, var(--alarm) 7%, transparent);
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 0 0 11rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.led {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: var(--static);
+}
+
+.led--none {
+  background: var(--static);
+}
+
+.led--live {
+  background: var(--phosphor);
+  box-shadow: 0 0 8px var(--phosphor);
+}
+
+.led--pending {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+}
+
+.led--failed {
+  background: var(--alarm);
+  box-shadow: 0 0 8px var(--alarm);
+}
+
+.led--armed {
+  background: var(--alarm);
+  box-shadow: 0 0 8px var(--alarm);
+  animation: ledPulse 1.1s steps(2, end) infinite;
+}
+
+@keyframes ledPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.status {
+  flex: 1 1 13rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.status--none { color: var(--text-muted); }
+.status--live { color: var(--phosphor); }
+.status--pending { color: var(--amber); }
+.status--armed { color: var(--alarm); }
+.status--failed { color: var(--alarm); }
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.action {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--void-line);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  @include cut-corner(8px);
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--static);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.confirm {
+  border-color: var(--alarm);
+  background: var(--alarm);
+  color: var(--void);
+  font-weight: 700;
+
+  &:hover {
+    color: var(--void);
+    border-color: var(--alarm);
+    filter: brightness(1.1);
+  }
+}
