@@ -6,6 +6,7 @@ import useToken from "../Login/UseToken";
 import {VoteRepository} from "../../domain/Vote/VoteRepository";
 import {VoteData} from "../../domain/Vote/VoteData";
 import styles from './FilmFestivalVoteList.module.scss';
+import {AliasLabel} from "./AliasLabel";
 
 function sortVotes(vote1: VoteData, vote2:VoteData){
     const order = ['d', 'D', 's', 'S', 'u', 'U', 'l', 'L', 'm', 'M'];
@@ -31,6 +32,9 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const renameMovie = (movieId: number, alias: string) =>
+        setMovieList((current) => current.map((movie) => movie.id === movieId ? {...movie, alias} : movie));
+
     return <section className={styles.page}>
         <h2 className={styles.heading}>Registro de expedientes</h2>
         {movieList.map((movieWithVote) => (
@@ -39,7 +43,12 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
                 {movieWithVote.link
                     ? <a className={styles.title} href={movieWithVote.link}>{movieWithVote.title}</a>
                     : <span className={styles.title}>{movieWithVote.title}</span>}
-                {movieWithVote.alias && <span className={styles.alias}>{movieWithVote.alias}</span>}
+                <AliasLabel movieId={movieWithVote.id}
+                            title={movieWithVote.title}
+                            alias={movieWithVote.alias ?? ''}
+                            repository={movieRepository}
+                            token={token}
+                            onRenamed={(alias) => renameMovie(movieWithVote.id, alias)}/>
                 <div className={styles.votes}>
                     {movieWithVote.votes.sort(sortVotes).map((vote: VoteData) => (
                         <span key={vote.user_id} className={styles.chip} data-score={vote.score}

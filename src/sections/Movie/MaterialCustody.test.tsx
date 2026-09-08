@@ -34,6 +34,10 @@ class FakeMovieRepository implements MovieRepository {
         throw new Error('No usado en este test');
     }
 
+    updateAlias(): Promise<Movie> {
+        throw new Error('No usado en este test');
+    }
+
     async discardMaterial(id: number, material: MovieMaterial): Promise<Movie> {
         if (this.failing) {
             throw new Error('Algo ha ido mal');

@@ -5,4 +5,5 @@ export interface MovieRepository {
     findById(id: number, token: string): Promise<Movie>
     findAll(filmFestivalId: string, token: string): Promise<Movie[]>
     discardMaterial(id: number, material: MovieMaterial, token: string): Promise<Movie>
+    updateAlias(id: number, alias: string | null, token: string): Promise<Movie>
 }

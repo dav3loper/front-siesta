@@ -57,4 +57,22 @@ export class AsyncFetchMovieRepository implements MovieRepository {
                 throw new Error('Algo ha ido mal');
             });
     }
+
+    updateAlias(id: number, alias: string | null, token: string): Promise<Movie> {
+        return fetch(this.host+`/movie/${id}/alias`, {
+            mode: 'cors',
+            method: 'PATCH',
+            headers : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({alias: alias})
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Algo ha ido mal');
+            });
+    }
 }

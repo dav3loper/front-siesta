@@ -1,0 +1,106 @@
+@import "../../styles/tokens";
+
+// Todo control de la etiqueta mide lo mismo, así la fila no cambia de alto al editar.
+$control: 1.35rem;
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: $control;
+}
+
+.alias {
+  font-size: 0.8rem;
+  color: var(--void);
+  background: var(--amber);
+  padding: 0.05rem 0.5rem;
+}
+
+.tagButton {
+  width: $control;
+  height: $control;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--phosphor);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 120ms linear, filter 120ms linear;
+
+  &:hover, &:focus-visible {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px var(--phosphor));
+  }
+}
+
+.tag {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linejoin: miter;
+  stroke-linecap: square;
+}
+
+.input {
+  width: 9rem;
+  height: $control;
+  padding: 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  background: var(--void-raised);
+  border: 1px solid var(--amber);
+  @include cut-corner(6px);
+
+  &:disabled {
+    opacity: 0.45;
+  }
+}
+
+.action {
+  width: $control;
+  height: $control;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 0.7rem;
+  line-height: 1;
+  border: 1px solid var(--void-line);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+
+  &:hover, &:focus-visible {
+    color: var(--text);
+    border-color: var(--static);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.confirm {
+  color: var(--phosphor);
+  border-color: color-mix(in srgb, var(--phosphor) 45%, transparent);
+
+  &:hover, &:focus-visible {
+    color: var(--void);
+    background: var(--phosphor);
+    border-color: var(--phosphor);
+  }
+}
+
+.failed {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--alarm);
+}
