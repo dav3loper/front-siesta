@@ -39,7 +39,8 @@ export function FilmFestivalVoteList({movieRepository, voteRepository}: {
         <h2 className={styles.heading}>Registro de expedientes</h2>
         {movieList.map((movieWithVote) => (
             <article className={styles.row} key={movieWithVote.id}>
-                <span className={styles.code}>EXP-{String(movieWithVote.id).padStart(2, '0')}</span>
+                <a className={styles.code}
+                   href={`/movie/${movieWithVote.id}`}>EXP-{String(movieWithVote.id).padStart(2, '0')}</a>
                 {movieWithVote.link
                     ? <a className={styles.title} href={movieWithVote.link}>{movieWithVote.title}</a>
                     : <span className={styles.title}>{movieWithVote.title}</span>}
