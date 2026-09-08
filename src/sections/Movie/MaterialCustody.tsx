@@ -21,6 +21,19 @@ function report(status: CustodyStatus, present: boolean): { text: string, tone: 
     }
 }
 
+function MaterialIcon({material, className}: { material: MovieMaterial, className: string }) {
+    return <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3"
+                aria-hidden="true">
+        <path d="M2.5 2.5H13.5V11L11 13.5H2.5Z" strokeLinejoin="round"/>
+        {material === 'poster'
+            ? <>
+                <circle cx="6" cy="6" r="1.1"/>
+                <path d="M4 10.5 6.8 7.8 10.5 11" strokeLinejoin="round"/>
+            </>
+            : <path d="M6.5 5.2 10.8 8 6.5 10.8Z" fill="currentColor" strokeLinejoin="round"/>}
+    </svg>;
+}
+
 export function MaterialCustody({movieId, poster, trailer, repository, token, onDiscarded}: {
     movieId: number,
     poster: string,
@@ -47,12 +60,10 @@ export function MaterialCustody({movieId, poster, trailer, repository, token, on
 
     const materials: { key: MovieMaterial, label: string, present: boolean }[] = [
         {key: 'poster', label: 'Cartel', present: Boolean(poster)},
-        {key: 'trailer', label: 'Señal de vídeo', present: Boolean(trailer)}
+        {key: 'trailer', label: 'Señal', present: Boolean(trailer)}
     ];
 
-    return <section className={styles.custody}>
-        <p className={styles.eyebrow}>{'// Cadena de custodia'}</p>
-        <p className={styles.hint}>Descarta el material que no corresponde a esta película.</p>
+    return <section className={styles.custody} aria-label="Cadena de custodia">
         {materials.map(({key, label, present}) => {
             const status = custody[key];
             const {text, tone} = report(status, present);
@@ -60,7 +71,7 @@ export function MaterialCustody({movieId, poster, trailer, repository, token, on
             return <div key={key}
                         className={`${styles.row} ${status === 'armed' ? styles['row--armed'] : ''}`}>
                 <span className={styles.name}>
-                    <span className={`${styles.led} ${styles[`led--${tone}`]}`} aria-hidden="true"/>
+                    <MaterialIcon material={key} className={`${styles.icon} ${styles[`icon--${tone}`]}`}/>
                     {label}
                 </span>
                 <span className={`${styles.status} ${styles[`status--${tone}`]}`} aria-live="polite">{text}</span>
