@@ -111,7 +111,6 @@
 }
 
 .posterWrap,
-.trailer,
 .trailerPlaceholder {
   width: 50%;
   max-width: 22rem;
@@ -195,6 +194,7 @@
 .trailer {
   flex: 1;
   min-width: 18rem;
+  height: 33rem;
   border: 1px solid var(--void-line);
 
   @media (max-width: 1024px) {
